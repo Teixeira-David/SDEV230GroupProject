@@ -13,6 +13,10 @@ string address;
 string relationship;
 string residence;
 string ownership;
+double grossIncome;
+string employStatus;
+string popGeo;
+string state;
 
 int main() {
     // Print "Hello, World!" to the console
@@ -49,11 +53,19 @@ int main() {
 
     // 3rd catergory Economic
     std::cout << "Economic Status:" << std::endl;
-
+    std::cout << "Enter your Gross Income: " << std::endl;
+    std::cin >> grossIncome;
+    std::cout << "What is your employment status?: " << std::endl;
+    std::cin >> employStatus;
+    
     // 4th catergory Geographical
     std::cout << "Geographical:" << std::endl;
-
+    std::cout << "Rural, suburban, or urban?: " << std::endl;
+    std::cin >> popGeo;
+    std::cout << "US Territory/State/Military Bases/Embassy?: " << std::endl;
+    std::cin >> state;
+    
     // 5th catergory User Demographics
-    std::cout << "User Demographics:" << std::endl;
+    //std::cout << "User Demographics:" << std::endl;
     return 0;
 }
