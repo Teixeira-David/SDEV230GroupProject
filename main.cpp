@@ -17,6 +17,9 @@ double grossIncome;
 string employStatus;
 string popGeo;
 string state;
+int employeeID;
+string employeeFirst;
+string employeeLast;
 
 int main() {
     // Print "Hello, World!" to the console
@@ -66,6 +69,13 @@ int main() {
     std::cin >> state;
     
     // 5th catergory User Demographics
-    //std::cout << "User Demographics:" << std::endl;
+    std::cout << "User Demographics:" << std::endl;
+    std::cout << "Enter employee ID: " << std::endl;
+    std::cin >> employeeID;
+    std::cout << "Enter First name: " << std::endl;
+    std::cin >> employeeFirst;
+    std::cout << "Enter Last name: " << std::endl;
+    std::cin >> employeeLast;
+    
     return 0;
 }
