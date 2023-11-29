@@ -2,21 +2,21 @@
 #include <string>
 
 // Variables
-string name;
+string name; // 1st
 string dob;
 string gender;
 string marital;
 string ethnicity;
 string occupation;
-string education;
+string education; // 2nd
 string address;
 string relationship;
 string residence;
-string ownership;
+string ownership; //3rd
 double grossIncome;
-string employStatus;
+string employStatus; //4th
 string popGeo;
-string state;
+string state; // 5th
 int employeeID;
 string employeeFirst;
 string employeeLast;
