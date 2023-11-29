@@ -8,16 +8,16 @@ string gender;
 string marital;
 string ethnicity;
 string occupation;
-string education; // 2nd
-string address;
+string education; 
+string address; // 2nd
 string relationship;
-string residence;
-string ownership; //3rd
+string residence; //3rd
+string ownership; 
 double grossIncome;
-string employStatus; //4th
-string popGeo;
-string state; // 5th
-int employeeID;
+string employStatus;
+string popGeo; //4th
+string state;
+int employeeID; // 5th
 string employeeFirst;
 string employeeLast;
 
