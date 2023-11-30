@@ -1,7 +1,7 @@
 /*
 Author: Lucas Landis
 Date of creation: 11/28/2023 7:20PM
-Date of last update: 11/28/2023 7:20PM
+Date of last update: 11/30/2023 8:54AM
 
 */
 
@@ -12,9 +12,9 @@ Date of last update: 11/28/2023 7:20PM
 #include <sstream> 
 
 
-// classes 
+// Geographic section of census
 class Geographic {
     public: 
-        string state;
-        string popGeo;
+        string state; // state, territory, embassy, or base
+        string popGeo; // rural, Urban, or suburban
 };
