@@ -40,7 +40,7 @@ class geographicClass {
         };
 
         // Display menu
-        void Display_Person_Menu() {
+        void Display_Geo_Menu() {
         };
 
         // Menu control
