@@ -1,7 +1,7 @@
 /*
 Author: Lucas Landis
 Date of creation: 11/28/2023 7:20PM
-Date of last update: 11/30/2023 8:54AM
+Date of last update: 12/05/2023 12:54PM
 
 */
 
@@ -39,4 +39,17 @@ class geographicClass {
             cin >> input;
         };
 
+        // Display menu
+        void Display_Person_Menu() {
+        };
+
+        // Menu control
+        void menu_Swith_Control() {
+        };
+
+    // Delcare the private class members    
+    private:
+        // Set the members
+        string strPopGeo;
+        int intState;
 };
