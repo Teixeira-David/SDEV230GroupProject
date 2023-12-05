@@ -26,7 +26,7 @@ class geographicClass {
         geographicClass(int rurality, string state)
             : intRurality(rurality), strState(state), {}
 
-        // Gets the Rural, Urban, or suburban / popGeo
+        // Gets the Rural, Urban, or suburban / rurality
         void get_Rurality() {
             int intInput;
             cout << "\n Enter 1 for Rural, 2 for Urban, 3 for Suburban: ";
