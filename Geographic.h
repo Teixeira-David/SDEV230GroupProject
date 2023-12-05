@@ -58,7 +58,8 @@ class geographicClass {
             cout << "\n1.) Enter state";
             cout << "\n2.) Enter Rurality"; // not sure what word to use?
             cout << "\n3.) Display House hold Rurality";
-            cout << "\n9.) Display House hold state";
+            cout << "\n4.) Display House hold state";
+            cout << "\n9.) Exit program";
         };
 
         // Menu control
@@ -80,17 +81,25 @@ class geographicClass {
                     case 1:
                         get_State();
                         break;
+                    
                     case 2:
                         get_Rurality();
                         break;
+                    
                     case 3:
                         display_Rurality();
                         break;
+                    
+                    case 4:
+                        display_State();
+                        break;
+                    
                     case 9:
                         // Exit the program
                         blnFlag = true;
                         exit(0);
                         break;
+                    
                     default:
                         cin.clear();
                         cin.ignore(numeric_limits<streamsize>::max(), '\n');
