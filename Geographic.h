@@ -1,7 +1,7 @@
 /*
 Author: Lucas Landis
 Date of creation: 11/28/2023 7:20PM
-Date of last update: 12/05/2023 12:54PM
+Date of last update: 12/05/2023 5:46PM
 
 */
 
@@ -17,32 +17,41 @@ Date of last update: 12/05/2023 12:54PM
 class geographicClass {
     public: 
         string state; // state, territory, embassy, or base
-        string popGeo; // rural, Urban, or suburban
+        string rurality; // rural, Urban, or suburban
         
         // Default constructor
         geographicClass() {}
 
         // Constructor parameters
-        geographicClass(string popGeo, int state)
-            : strPopGeo(popGeo), intState(state), {}
+        geographicClass(int rurality, string state)
+            : intRurality(rurality), strState(state), {}
 
         // Gets the Rural, Urban, or suburban / popGeo
-        void get_Population_Geo() {
-            int input;
+        void get_Rurality() {
+            int intInput;
             cout << "\n Enter 1 for Rural, 2 for Urban, 3 for Suburban: ";
-            cin >> input;
+            cin >> intInput;
+            intRurality = intInput;
         };
 
         // Gets the state/territory
         void get_State() {
-            string input;
+            string strInput;
             cout << "\n Please enter the state, territory, embassy, or U.S. base where you reside : ";
-            cin >> input;
+            cin >> strInput;
+            strState = strInput;
+        };
+
+        void display_State() {
+            cout << "\n State is: " << strState;
+        };
+
+        void display_Rurality() {
+            cout << "\n Rurality is: " << intRurality;
         };
 
         // Display menu
-        void Display_Geo_Menu() {
-        {
+        void display_Geo_Menu() {
             cout << "\n\n---------------------------------------------------------------------------------------";
             cout << "\n\t\t\t Please select from the menu options " << endl;
             cout << "---------------------------------------------------------------------------------------";
@@ -50,8 +59,6 @@ class geographicClass {
             cout << "\n2.) Enter Rurality"; // not sure what word to use?
             cout << "\n3.) Display House hold Rurality";
             cout << "\n9.) Display House hold state";
-        } 
-
         };
 
         // Menu control
@@ -62,7 +69,7 @@ class geographicClass {
 
             while (!(blnFlag)) {
                 // Display the options
-                Display_Person_Menu();
+                display_Geo_Menu();
 
                 // Get the user input for the menu selection 
                 cout << "\n\n Please enter your choice here: ";
@@ -71,13 +78,13 @@ class geographicClass {
                 // Use switch statement to find what the user would like to perform 
                 switch (intSelectionNum) {
                     case 1:
-                        get_State()
+                        get_State();
                         break;
                     case 2:
-                        get_Population_Geo()
+                        get_Rurality();
                         break;
                     case 3:
-
+                        display_Rurality();
                         break;
                     case 9:
                         // Exit the program
@@ -96,6 +103,6 @@ class geographicClass {
     // Delcare the private class members    
     private:
         // Set the members
-        string strPopGeo;
-        int intState;
+        int intRurality;
+        string strState;
 };
