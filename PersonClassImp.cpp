@@ -16,6 +16,7 @@
 #include "PersonClass.h"
 
 // Provide scope to identifiers inside the standard library
+using namespace std;
 
 // Class method implementations 
 // Defualt Constructor
@@ -50,7 +51,96 @@ PersonClass::PersonClass(string firstName, string lastName, string age, GenderTy
       m_eEducationLevelType(educateLevel) {}
 
 
-void PersonClass::setFirstName(string& firstName)
+void PersonClass::enterPersonDetails() 
+/*
+Function Name: enterPersonDetails
+Function Purpose: This function is to get all the inputs required for each person
+*/
+{
+    // Call the existing setter methods for each attribute
+    setFirstName();
+    setLastName();
+    setAge();
+    setGender();
+    setMaritalStatus();
+    setEthnicity();
+    setOccupation();
+    setEducation();
+}
+    
+PersonClass** PersonClass::allocPersons() 
+/*
+Function Name: allocPersons
+Function Purpose: This function is to allocate memory for each new household entry and return the Person array 
+object to user.
+*/
+{
+    while (true) {
+        // Delcare Local Variables
+        int m_intMaxPersonCount = 0;
+
+        // Get the max person count for the household
+        cout << "\n\nEnter the number of people in the household: ";
+        if (!(cin >> m_intMaxPersonCount) || m_intMaxPersonCount < 0) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input. Please enter a positive number.\n";
+            continue;
+        }
+        // Create the null pointer
+        PersonClass** m_aPersons = nullptr;
+        try {
+            // Create the pointer array set to the maximum number of people in the household
+            m_aPersons = new PersonClass*[m_intMaxPersonCount];
+
+            // Allocate memory for the PersonClass objects
+            for (int i = 0; i < m_intMaxPersonCount; i++) {
+                m_aPersons[i] = new PersonClass();
+
+                // Call the enterPersonDetails method to get all the data entry
+                m_aPersons[i]->enterPersonDetails();
+            }
+        } catch (const std::bad_alloc& e) {
+            // Handle memory allocation failure
+            cout << "Memory allocation failed: " << e.what() << endl;
+            // Deallocate memory allocated so far
+            for (int i = 0; i < m_intMaxPersonCount; i++) {
+                delete m_aPersons[i];
+            }
+            delete[] m_aPersons;
+            return;
+        } catch (const std::exception& e) {
+            // Handle other exceptions
+            cout << "An error occurred: " << e.what() << endl;
+            // Deallocate memory allocated so far
+            for (int i = 0; i < m_intMaxPersonCount; i++) {
+                delete m_aPersons[i];
+            }
+            delete[] m_aPersons;
+            return;
+        }
+        
+        // Return the array of pointers. This return object must be paired with the destroy function 
+        return m_aPersons;
+    }
+}
+
+void PersonClass::deallocPersons(PersonClass** aPersons, int intSize) 
+/*
+Function Name: deallocPersons
+Function Purpose: This function is to de-allocate memory for each new household entry and return the Person array 
+object to user.
+*/
+{
+    if (aPersons != nullptr) {
+        for (int i = 0; i < intSize; i++) {
+            delete aPersons[i];
+        }
+        delete[] aPersons;
+    }
+}
+
+void PersonClass::setFirstName()
 /*
 Function Name: setFirstName
 Function Purpose: This function is to gets the first name of the person
@@ -76,8 +166,7 @@ Function Purpose: This function is to gets the first name of the person
             }
 
             // Set the param to input if valid
-            firstName = strInput;
-            m_strFirstName = firstName;
+            m_strFirstName = strInput;
             break;
         
         // End Catch    
@@ -90,7 +179,7 @@ Function Purpose: This function is to gets the first name of the person
     }
 }
 
-void PersonClass::setLastName(string& lastName)
+void PersonClass::setLastName()
 /*
 Function Name: setLastName
 Function Purpose: This function is to gets the last name of the person
@@ -116,8 +205,7 @@ Function Purpose: This function is to gets the last name of the person
             }
 
             // Set the param to input if valid
-            lastName = strInput;
-            m_strLastName = lastName;
+            m_strLastName = strInput;
             break;
         
         // End Catch    
@@ -130,7 +218,7 @@ Function Purpose: This function is to gets the last name of the person
     }
 }
 
-void PersonClass::setAge(string& age)
+void PersonClass::setAge()
 /*
 Function Name: setAge
 Function Purpose: This function is to sets the age of the person
@@ -162,9 +250,8 @@ Function Purpose: This function is to sets the age of the person
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 throw runtime_error("Invalid selection. Please enter a number between 1 and 17.");
             } else {
-                age = ageRanges[choice - 1];
-                cout << "Selected age range: " << age << "\n";
-                m_strAgeRange = age;
+                m_strAgeRange = ageRanges[choice - 1];
+                cout << "Selected age range: " << m_strAgeRange << "\n";
                 break; 
             }
 
@@ -298,7 +385,7 @@ Function Purpose: This function is to sets the marital status of the person.
     }
 }
 
-void PersonClass::setOccupation(string& occupation)
+void PersonClass::setOccupation()
 /*
 Function Name: setOccupation
 Function Purpose: This function is to gets the occupation of the person
@@ -324,8 +411,7 @@ Function Purpose: This function is to gets the occupation of the person
             }
 
             // Set the param to input if valid
-            occupation = strInput;
-            m_strOccupation = occupation;
+            m_strOccupation = strInput;
             break;
         
         // End Catch    
@@ -496,43 +582,43 @@ string PersonClass::getFirstName() const
     return m_strFirstName;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the last name
 string PersonClass::getLastName() const 
 {
     return m_strLastName;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the age range
 string PersonClass::getAgeRange() const 
 {
     return m_strAgeRange;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the custom gender
 string PersonClass::getGender() const 
 {
     return m_strCustomGender;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the custom marital status
 string PersonClass::getMaritalStatus() const 
 {
     return m_strCustomMaritalStatus;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the custom ethnicity
 string PersonClass::getEthnicity() const 
 {
     return m_strCustomEthnicity;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the occupation
 string PersonClass::getOccupation() const 
 {
     return m_strOccupation;
 }
 
-// Method Purpose: Get the first name
+// Method Purpose: Get the custom education
 string PersonClass::getEducation() const 
 {
     return m_strCustomEducationLevel;
@@ -561,13 +647,13 @@ Function Purpose: This function converts the enum type to string
 */
 {
     switch (m_eMaritalStatusType) {
-        case MaritalType::SINGLE: return "Female";
-        case MaritalType::MARRIED: return "Male";
-        case MaritalType::SEPARATED: return "Non-Binary";
-        case MaritalType::DIVORCED: return "Transgender";
-        case MaritalType::CIVIL_PARTNERSHIP: return "Transgender";
+        case MaritalType::SINGLE: return "Single";
+        case MaritalType::MARRIED: return "Married";
+        case MaritalType::SEPARATED: return "Separated";
+        case MaritalType::DIVORCED: return "Divorced";
+        case MaritalType::CIVIL_PARTNERSHIP: return "Civil Partnership";
         case MaritalType::OTHER: return "Other: " + m_strCustomMaritalStatus;
-        default: return "Unknown Gender";
+        default: return "Unknown Marital Status";
     }
 }
 
@@ -577,31 +663,92 @@ Function Name: educationTypeToString
 Function Purpose: This function converts the enum type to string
 */
 {
-    switch (m_eGenderType) {
-        case GenderType::FEMALE: return "Female";
-        case GenderType::MALE: return "Male";
-        case GenderType::NON_BINARY: return "Non-Binary";
-        case GenderType::TRANSGENDER: return "Transgender";
-        case GenderType::OTHER: return "Other: " + m_strCustomGender;
-        default: return "Unknown Gender";
+    switch (m_eEducationLevelType) {
+        case EducationType::NO_SCHOOLING: return "No Schooling";
+        case EducationType::SOME_PRIMARY_EDUCATION: return "Some Primary Education";
+        case EducationType::PRIMARY_EDUCATION: return "Primary Education";
+        case EducationType::SOME_SECONDARY_EDUCATION: return "Some Secondary Education";
+        case EducationType::SECONDARY_EDUCATION: return "Secondary Education";
+        case EducationType::VOCATIONAL_TRAINING: return "Vocational Training";
+        case EducationType::SOME_COLLEGE: return "Some College";
+        case EducationType::COLLEGE_EDUCATION: return "College Education";
+        case EducationType::POST_GRADUATE: return "Post Graduate";
+        case EducationType::ADVANCED_DEGREE: return "Advanced Degree";
+        case EducationType::OTHER: return "Other: " + m_strCustomEducationLevel;
+        default: return "Unknown Education Level";
     }
 }
 
-
-string PersonClass::genderTypeToString() const 
+string PersonClass::ethnicityTypeToString() const 
 /*
 Function Name: genderTypeToString
 Function Purpose: This function converts the enum type to string
 */
 {
-    switch (m_eGenderType) {
-        case GenderType::FEMALE: return "Female";
-        case GenderType::MALE: return "Male";
-        case GenderType::NON_BINARY: return "Non-Binary";
-        case GenderType::TRANSGENDER: return "Transgender";
-        case GenderType::OTHER: return "Other: " + m_strCustomGender;
-        default: return "Unknown Gender";
+    switch (m_eEthnicityType) {
+        case EthnicityType::CAUCASIAN: return "Caucasian";
+        case EthnicityType::AFRICAN: return "African";
+        case EthnicityType::LATINO: return "Latino";
+        case EthnicityType::NATIVE_AMERICAN: return "Native American";
+        case EthnicityType::PACIFIC_ISLANDER: return "Pacific Islander";
+        case EthnicityType::MIXED_ETHNICITY: return "Mixed Ethnicity";
+        case EthnicityType::OTHER: return "Other: " + m_strCustomEthnicity;
+        default: return "Unknown Ethnicity";
     }
+}
+
+// Method Purpose: Display the whole set of members
+void PersonClass::print() const
+{
+    cout << "Name: " << m_strFirstName << " " << m_strLastName << endl;
+    cout << "Age: " << m_strAgeRange << endl;
+    cout << "Gender: " << genderTypeToString() << endl;
+    cout << "Marital Status: " << maritalTypeToString() << endl;
+    cout << "Ethnicity: " << ethnicityTypeToString() << endl;
+    cout << "Occupation: " << m_strOccupation << endl;
+    cout << "Education Level: " << educationTypeToString() << endl;
+}
+
+// Method Purpose: Display the fName and lName
+void PersonClass::printName() const
+{
+    cout << "Name: " << m_strFirstName << " " << m_strLastName << endl;
+}
+
+// Method Purpose: Display the Gender
+void PersonClass::printGender() const
+{
+    cout << "Gender: " << genderTypeToString() << endl;
+}
+
+// Method Purpose: Display the Age
+void PersonClass::printAge() const
+{
+    cout << "Age: " << m_strAgeRange << endl;
+}
+
+// Method Purpose: Display the Marital Status
+void PersonClass::printMaritalStatus() const
+{
+    cout << "Marital Status: " << maritalTypeToString() << endl;
+}
+
+// Method Purpose: Display the Ethnicity
+void PersonClass::printEthnicity() const
+{
+    cout << "Ethnicity: " << ethnicityTypeToString() << endl;
+}
+
+// Method Purpose: Display the Occupation
+void PersonClass::printOccupation() const
+{
+    cout << "Occupation: " << m_strOccupation << endl;
+}
+
+// Method Purpose: Display the Education Level
+void PersonClass::printEducationLevel() const
+{
+    cout << "Education Level: " << educationTypeToString() << endl;
 }
 
 void Display_Person_Menu()

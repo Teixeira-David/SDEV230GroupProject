@@ -45,14 +45,19 @@ Class Purpose: This is the PersonClass class
         // Setter Functions
         void setPersonDetails(string firstName, string lastName, string age, GenderType gender, 
             MaritalType maritalStatus, EthnicityType ethnicity, string occupation, EducationType educateLevel);
-        void setFirstName(string& firstName); 
-        void setLastName(string& lastName); 
-        void setAge(string& age); 
+        void setFirstName(); 
+        void setLastName(); 
+        void setAge(); 
         void setGender(); 
         void setMaritalStatus(); 
         void setEthnicity(); 
-        void setOccupation(string& occupation);
-        void setEducation(); 
+        void setOccupation();
+        void setEducation();
+        void enterPersonDetails();
+
+        // Execution memory methods
+        PersonClass** allocPersons();
+        void deallocPersons(PersonClass** aPersons, int intSize);
 
         // Getter Functions
         GenderType getGenderType_Enum() const;
@@ -80,6 +85,10 @@ Class Purpose: This is the PersonClass class
 
     // Delcare the private class members 'm_' -> member var indicator
     private:
+        // Store memory information
+        PersonClass** m_aPersons;
+        int m_intMaxPersonCount;
+
         // Set the members
         string m_strFirstName;
         string m_strLastName;
