@@ -1,16 +1,16 @@
 /*
 Author: Lucas Landis
 Date of creation: 11/28/2023 7:20PM
-Date of last update: 12/05/2023 5:46PM
+Date of last update: 12/08/2023 7:46PM
 
 */
-
 
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <sstream> 
 #include <iomanip>
+#include <limits>
 
 using namespace std;
 
@@ -18,7 +18,7 @@ using namespace std;
 class geographicClass {
     public: 
         string state; // state, territory, embassy, or base
-        string rurality; // rural, Urban, or suburban
+        int rurality; // rural, Urban, or suburban
         
         // Default constructor
         geographicClass() {}
@@ -29,26 +29,62 @@ class geographicClass {
 
         // Gets the Rural, Urban, or suburban / rurality
         void get_Rurality() {
-            int intInput;
-            cout << "\n Enter 1 for Rural, 2 for Urban, 3 for Suburban: ";
+        int intInput;
+        bool valid = false;
+
+        while (!(valid)) {
+            cout << "\nEnter 1 for Rural, 2 for Urban, 3 for Suburban: ";
             cin >> intInput;
-            intRurality = intInput;
+
+            // Check if input is valid
+            if (intInput == 1 || intInput == 2 || intInput == 3) {
+                valid = true;
+                intRurality = intInput;
+            } 
+            else {
+                cout << "\nError: Invalid input. Please enter 1, 2, or 3.";
+                cin.clear(); // Clear error flags
+                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            }
+
+        }
         };
 
         // Gets the state/territory
         void get_State() {
             string strInput;
-            cout << "\n Please enter the state, territory, embassy, or U.S. base where you reside : ";
+            cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
             cin >> strInput;
             strState = strInput;
         };
 
+        // This displays the state or territory
         void display_State() {
-            cout << "\n State is: " << strState;
+            cout << "\nState is: " << strState;
         };
-
+        // This displays the Rurality
         void display_Rurality() {
-            cout << "\n Rurality is: " << intRurality;
+            string strOutput;
+            switch(intRurality) { // gives the answer in string so user can tell what the rurality truly is
+                case 1:
+                    strOutput = "Rural";
+                    cout << "\nRurality is: " << strOutput;
+                    break;
+                
+                case 2:
+                    strOutput = "Urban";
+                    cout << "\nRurality is: " << strOutput;
+                    break;
+
+                case 3: 
+                    strOutput = "Suburban";
+                    cout << "\nRurality is: " << strOutput;
+                    break;
+
+                default:
+                    cout << "\nNo Rurality recorded.";
+                    break;
+            }
         };
 
         // Display menu
@@ -74,7 +110,7 @@ class geographicClass {
                 display_Geo_Menu();
 
                 // Get the user input for the menu selection 
-                cout << "\n\n Please enter your choice here: ";
+                cout << "\n\nPlease enter your choice here: ";
                 cin >> intSelectionNum;
 
                 // Use switch statement to find what the user would like to perform 
