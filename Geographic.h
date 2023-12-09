@@ -12,6 +12,7 @@ Date of last update: 12/05/2023 5:46PM
 #include <sstream> 
 #include <iomanip>
 
+using namespace std;
 
 // Geographic class
 class geographicClass {
@@ -24,7 +25,7 @@ class geographicClass {
 
         // Constructor parameters
         geographicClass(int rurality, string state)
-            : intRurality(rurality), strState(state), {}
+            : intRurality(rurality), strState(state) {}
 
         // Gets the Rural, Urban, or suburban / rurality
         void get_Rurality() {
