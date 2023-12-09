@@ -54,7 +54,7 @@ class geographicClass {
         void get_State() {
             string strInput;
             cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
-            cin >> strInput;
+            cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
             strState = strInput;
         };
 
