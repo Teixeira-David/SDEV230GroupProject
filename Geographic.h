@@ -1,7 +1,7 @@
 /*
 Author: Lucas Landis
 Date of creation: 11/28/2023 7:20PM
-Date of last update: 12/08/2023 7:46PM
+Date of last update: 12/08/2023 7:54PM
 
 */
 
@@ -60,7 +60,12 @@ class geographicClass {
 
         // This displays the state or territory
         void display_State() {
-            cout << "\nState is: " << strState;
+            if (strState == "") {
+                cout << "No state recorded.";
+            }
+            else {
+                cout << "\nState is: " << strState;
+            }
         };
         // This displays the Rurality
         void display_Rurality() {
