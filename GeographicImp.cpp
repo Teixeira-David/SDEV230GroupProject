@@ -14,4 +14,12 @@ Date of creation: 12/9/2023 2:30PM
 
 using namespace std;
 
-geographicClass
+// Defualt Constructor
+geographicClass::geographicClass()
+    : intRurality(""), strState("") {}
+
+// Constructor with parameters
+geographicClass::geographicClass(int rurality, string state)
+    : intRurality(rurality), strState(state) {}
+
+
