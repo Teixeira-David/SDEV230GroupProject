@@ -5,6 +5,10 @@ Date of last update: 12/08/2023 7:54PM
 
 */
 
+// Check preprocessor macro for definition
+#ifndef H_GeographicClass
+#define H_GeographicClass
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -17,15 +21,24 @@ using namespace std;
 // Geographic class
 class geographicClass {
     public: 
-        string state; // state, territory, embassy, or base
-        int rurality; // rural, Urban, or suburban
+        //string state; // state, territory, embassy, or base
+        //int rurality; // rural, Urban, or suburban
         
         // Default constructor
-        geographicClass() {}
+        geographicClass();
 
         // Constructor parameters
-        geographicClass(int rurality, string state)
-            : intRurality(rurality), strState(state) {}
+        geographicClass(int rurality, string state);
+
+        // setter
+
+
+        // getter
+
+
+        // print
+
+
 
         // Gets the Rural, Urban, or suburban / rurality
         void get_Rurality() {
@@ -157,3 +170,5 @@ class geographicClass {
         int intRurality;
         string strState;
 };
+
+#endif
