@@ -100,6 +100,8 @@ object to user.
                 // Call the enterPersonDetails method to get all the data entry
                 m_aPersons[i]->enterPersonDetails();
             }
+            // Return the array of pointers. This return object must be paired with the destroy function 
+            return m_aPersons;
         } catch (const std::bad_alloc& e) {
             // Handle memory allocation failure
             cout << "Memory allocation failed: " << e.what() << endl;
@@ -108,7 +110,7 @@ object to user.
                 delete m_aPersons[i];
             }
             delete[] m_aPersons;
-            return;
+            return nullptr;
         } catch (const std::exception& e) {
             // Handle other exceptions
             cout << "An error occurred: " << e.what() << endl;
@@ -117,11 +119,8 @@ object to user.
                 delete m_aPersons[i];
             }
             delete[] m_aPersons;
-            return;
+            return nullptr;
         }
-        
-        // Return the array of pointers. This return object must be paired with the destroy function 
-        return m_aPersons;
     }
 }
 
@@ -750,81 +749,3 @@ void PersonClass::printEducationLevel() const
 {
     cout << "Education Level: " << educationTypeToString() << endl;
 }
-
-void Display_Person_Menu()
-/*
-Function Name: Display_User_Menu
-Function Purpose: This function is the display function for the user menu
-*/
-{
-    cout << "\n\n---------------------------------------------------------------------------------------";
-    cout << "\n\t\t\t Please select from the menu options " << endl;
-    cout << "---------------------------------------------------------------------------------------";
-    cout << "\n1.) Enter Person(s) First/Last Name";
-    cout << "\n2.) Enter Person(s) Age";
-    cout << "\n3.) Enter Person(s) Gender";
-    cout << "\n4.) Enter Person(s) Marital Status";
-    cout << "\n5.) Enter Person(s) Ethnicity";
-    cout << "\n6.) Enter Person(s) Occupation";
-    cout << "\n7.) Display House Hold Person(s) Demographics";
-    cout << "\n8.) Display House Hold Person(s) Demographics";
-    cout << "\n9.) Display House Hold Person(s) Demographics";
-} 
-
-void Menu_Person_Switch_Control()
-/*
-Function Name: Menu_Person_Switch_Control
-Function Purpose: This function is the primary switch control for the user's Person Demographics menue.
-*/
-{
-    // Delcaer Local Variables
-    int intSelectionNum = 0;
-    bool blnFlag = false;
-
-    while (!(blnFlag)) {
-        // Display the options
-        Display_Person_Menu();
-
-        // Get the user input for the menu selection 
-        cout << "\n\n Please enter your choice here: ";
-        cin >> intSelectionNum;
-
-        // Use switch statement to find what the user would like to perform 
-        switch (intSelectionNum) {
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-            case 6:
-                
-                break;
-            case 7:
-                
-                break;
-            case 8:
-
-                break;
-            case 9:
-                // Exit the program
-                blnFlag = true;
-                exit(0);
-                break;
-            default:
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "\n\nPlease select any number from the menu!" << endl;
-                break;
-        }
-    }
-}  

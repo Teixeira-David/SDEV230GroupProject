@@ -73,6 +73,12 @@ Class Purpose: This is the PersonClass class
         string getOccupation() const;
         string getEducation() const;
 
+        // Enum to string
+        string genderTypeToString() const;
+        string maritalTypeToString() const;
+        string educationTypeToString() const;
+        string ethnicityTypeToString() const;
+        
         // Functions to print information
         void print() const;
         void printName() const;
@@ -104,12 +110,6 @@ Class Purpose: This is the PersonClass class
         MaritalType m_eMaritalStatusType;
         EducationType m_eEducationLevelType;
         EthnicityType m_eEthnicityType;
-
-        // Enum to string
-        string genderTypeToString() const;
-        string maritalTypeToString() const;
-        string educationTypeToString() const;
-        string ethnicityTypeToString() const;
 };
 
 #endif
