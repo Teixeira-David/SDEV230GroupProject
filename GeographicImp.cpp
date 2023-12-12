@@ -70,19 +70,19 @@ void menu_Swith_Control() {
         // Use switch statement to find what the user would like to perform 
         switch (intSelectionNum) {
             case 1:
-                get_State();
+                set_State();
                 break;
             
             case 2:
-                get_Rurality();
+                set_Rurality();
                 break;
                     
             case 3:
-                display_Rurality();
+                print_Rurality();
                 break;
                     
             case 4:
-                display_State();
+                print_State();
                 break;
                     
             case 9:
