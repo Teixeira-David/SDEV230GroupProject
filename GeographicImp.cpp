@@ -120,21 +120,21 @@ void print_Rurality() {
             strOutput = "Rural";
             cout << "\nRurality is: " << strOutput;
             break;
-                
-            case 2:
-                strOutput = "Urban";
-                cout << "\nRurality is: " << strOutput;
-                break;
+        
+        case 2:
+            strOutput = "Urban";
+            cout << "\nRurality is: " << strOutput;
+            break;
 
-            case 3: 
-                strOutput = "Suburban";
-                cout << "\nRurality is: " << strOutput;
-                break;
+        case 3: 
+            strOutput = "Suburban";
+            cout << "\nRurality is: " << strOutput;
+            break;
 
-            default:
-                cout << "\nNo Rurality recorded.";
-                break;
-        }
+        default:
+            cout << "\nNo Rurality recorded.";
+            break;
+    }
 };
 
 void display_Geo_Menu() {
