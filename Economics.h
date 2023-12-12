@@ -9,12 +9,18 @@
 class Economics {
 public:
     // Function to get the user's gross income
-    double getGrossIncome() const;
+    void setGrossIncome();
 
     // Function to get the user's employment status
-    std::string getEmploymentStatus() const;
+    void setEmploymentStatus();
+
+    // Function to display user information
+    void displayEconomics() const;
 
 private:
+    double grossIncome;
+    std::string employmentStatus;
+    
     // Helper function to validate numeric input
     double getNumericInput(const std::string& prompt) const;
 };
