@@ -16,7 +16,7 @@ using namespace std;
 
 // Defualt Constructor
 geographicClass::geographicClass()
-    : intRurality(""), strState("") {}
+    : intRurality(0), strState("") {}
 
 // Constructor with parameters
 geographicClass::geographicClass(int rurality, string state)
@@ -26,7 +26,7 @@ geographicClass::geographicClass(int rurality, string state)
 
 
 // setter functions
-void set_Rurality() {
+void geographicClass::set_Rurality() {
     int intInput;
     bool valid = false;
     
@@ -48,14 +48,14 @@ void set_Rurality() {
     }
 };
 
-void set_State() {
+void geographicClass::set_State() {
     string strInput;
     cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
     cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
     strState = strInput;
 };
 
-void menu_Swith_Control() {
+void geographicClass::menu_Swith_Control() {
     // Local Variables
     int intSelectionNum = 0;
     bool blnFlag = false;
@@ -104,7 +104,7 @@ void menu_Swith_Control() {
 
 
 // print functions
-void print_State() {
+void geographicClass::print_State() {
     if (strState == "") {
         cout << "No state recorded.";
     }
@@ -113,7 +113,7 @@ void print_State() {
     }
 };
 
-void print_Rurality() {
+void geographicClass::print_Rurality() {
     string strOutput;
     switch(intRurality) { // gives the answer in string so user can tell what the rurality truly is
         case 1:
@@ -137,7 +137,7 @@ void print_Rurality() {
     }
 };
 
-void display_Geo_Menu() {
+void geographicClass::display_Geo_Menu() {
     cout << "\n\n---------------------------------------------------------------------------------------";
     cout << "\n\t\t\t Please select from the menu options " << endl;
     cout << "---------------------------------------------------------------------------------------";
