@@ -2,15 +2,18 @@
 
 #include "Economics.h"
 
-double Economics::getGrossIncome() const {
-    return getNumericInput("Enter your gross income: ");
+void Economics::setGrossIncome() {
+    grossIncome = getNumericInput("Enter your gross income: ");
 }
 
-std::string Economics::getEmploymentStatus() const {
+void Economics::setEmploymentStatus() {
     std::cout << "Enter your employment status (e.g., Full-time, Part-time, unemployed, self-employed): ";
-    std::string status;
-    std::getline(std::cin, status);
-    return status;
+    std::getline(std::cin, employmentStatus);
+}
+
+void Economics::displayEconomics() const {
+    std::cout << "Gross Income: $" << grossIncome << std::endl;
+    std::cout << "Employment Status: " << employmentStatus << std::endl;
 }
 
 double Economics::getNumericInput(const std::string& prompt) const {
