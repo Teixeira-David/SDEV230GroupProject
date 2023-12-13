@@ -102,6 +102,15 @@ void geographicClass::menu_Swith_Control() {
 
 // getter functions
 
+// returns the variables function
+void geographic::get_State() {
+    return strState;
+};
+
+// returns the variables function
+void geographic::get_Rurality() {
+    return intRurality;
+};
 
 // print functions
 void geographicClass::print_State() {
