@@ -14,13 +14,19 @@ class Household{
         void setAddress();
         void setRelationship();
         void setResidence();
-        void setOwnerhsip();
+        void setOwnership();
+        void enterHouseholdDetails();
+
+        // Execution memory methods
+        Household** allocHouseholds();
+        void deallocHouseholds(Household** aHouseholds, int intSize);
 
         //getters
         string getAddress() const;
         string getRelationship() const;
         string getResidence() const;
         string getOwnership() const;
+        int getMaxHouseholdCount() const;
 
         //printing
         void printAll() const;
@@ -33,7 +39,14 @@ class Household{
         Household();
         Household(string add, string rel, string res, string own);
 
+        // Format for file dump
+        string formatForFile() const;
+
     private:
+        // Store memory information
+        Household** m_aHouseholds;
+        int m_intMaxHouseholdCount = 1;
+
         //variables
         string address;
         string relationship;

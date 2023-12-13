@@ -21,6 +21,9 @@
 #include "PersonClass.h"
 #include "UserClass.h"
 #include "CensusData.h"
+#include "Household.h"
+#include "Economics.h"
+#include "GeographicClass.h"
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -30,6 +33,7 @@ using namespace std;
 ControlFlowClass::ControlFlowClass() {
          ClearScreen();
          DisplayStartUpMsg();
+         // m_aCensusData = vector<CensusData>();
 }
 
 void ControlFlowClass::ClearScreen() 
@@ -321,9 +325,6 @@ Function Name: Set_Persons_Info
 Function Purpose: This function is to get the persons information
 */
 {
-    // Declare Variables
-    vector<CensusData> data;
-
     // Display the message
     ClearScreen();
     Display_Persons_Msg();
@@ -338,24 +339,20 @@ Function Purpose: This function is to get the persons information
         for (int i = 0; i < personObj.getMaxPersonCount(); i++) {
             persons[i]->enterPersonDetails();
 
-            // Construct the object
+            // Construct the CensusData object
             CensusData censusEntry(
-                persons[i] -> getFirstName(),
-                persons[i] -> getLastName(),
-                persons[i] -> getAgeRange(),
-                persons[i] -> getGender(),
-                persons[i] -> getMaritalStatus(),
-                persons[i] -> getEthnicity(),
-                persons[i] -> getEducation()
+                // Pass the entire PersonClass object
+                *persons[i]
             );
-            data.push_back(censusEntry);
+            m_aCensusData.push_back(censusEntry);
         }
+
         // Deallocate memory when done
         personObj.deallocPersons(persons, personObj.getMaxPersonCount());
     }
 
-    // Return the object
-    return data;
+    // Return the aggregated census data
+    return m_aCensusData;
 }
 
 vector<CensusData> ControlFlowClass::Set_Households_Info() 
@@ -369,11 +366,29 @@ Function Purpose: This function is to get the household information
     Display_HouseHolds_Msg();
 
     // Get the inputs from the user
+    Household householdObj;
+    Household** households = householdObj.allocHouseholds();
 
-    // Check if household is not null
+    // Check if households is not null
+    if (households != nullptr) {
+        // Loop through each household and get their details
+        for (int i = 0; i < householdObj.getMaxHouseholdCount(); i++) {
+            households[i]->enterHouseholdDetails();
 
-    // Return the object
-    
+            // Construct the CensusData object using household data
+            CensusData censusEntry(
+                // Pass the entire HouseHold object
+                *households[i]
+            );
+            m_aCensusData.push_back(censusEntry);
+        }
+
+        // Deallocate memory when done
+        householdObj.deallocHouseholds(households, householdObj.getMaxHouseholdCount());
+    }
+
+    // Return the aggregated census data
+    return m_aCensusData;
 }
 
 vector<CensusData> ControlFlowClass::Set_Economics_Info() 
@@ -387,10 +402,29 @@ Function Purpose: This function is to get the econmics information
     Display_Economics_Msg();
 
     // Get the inputs from the user
+    Economics economicObj;
+    Economics** economics = economicObj.allocEconomics();
 
+    // Check if households is not null
+    if (economics != nullptr) {
+        // Loop through each household and get their details
+        for (int i = 0; i < economicObj.getMaxEconomicCount(); i++) {
+            economics[i]->enterEconomicsDetails();
 
-    // Return the object
+            // Construct the CensusData object using household data
+            CensusData censusEntry(
+                // Pass the entire HouseHold object
+                *economics[i]
+            );
+            m_aCensusData.push_back(censusEntry);
+        }
 
+        // Deallocate memory when done
+        economicObj.deallocEconomics(economics, economicObj.getMaxEconomicCount());
+    }
+
+    // Return the aggregated census data
+    return m_aCensusData;
 }
 
 vector<CensusData> ControlFlowClass::Set_Geographics_Info() 
@@ -404,13 +438,32 @@ Function Purpose: This function is to get the econmics information
     Display_Geographics_Msg();
 
     // Get the inputs from the user
+    geographicClass geographicObj;
+    geographicClass** geographic = geographicObj.allocGeographics();
 
+    // Check if households is not null
+    if (geographic != nullptr) {
+        // Loop through each household and get their details
+        for (int i = 0; i < geographicObj.getMaxGeographicCount(); i++) {
+            geographic[i]->enterGeographicDetails();
 
-    // Get the input view input request from the user and display the entered data
+            // Construct the CensusData object using household data
+            CensusData censusEntry(
+                // Pass the entire HouseHold object
+                *geographic[i]
+            );
+            m_aCensusData.push_back(censusEntry);
+        }
 
+        // Deallocate memory when done
+        geographicObj.deallocGeographics(geographic, geographicObj.getMaxGeographicCount());
+    }
+
+    // Return the aggregated census data
+    return m_aCensusData;
 }
 
-vector<CensusData> ControlFlowClass::Generate_CensusReport() 
+void ControlFlowClass::Generate_CensusReport() 
 /*
 Function Name: generateCensusReport
 Function Purpose: This function is to get the econmics information

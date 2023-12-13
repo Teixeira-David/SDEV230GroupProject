@@ -37,8 +37,8 @@ Class Purpose: This is the ControlFlowClass class
 
 
         // Setter Functions
-        void Set_LoginCred();
-        void Set_CensusReport();
+        // void Set_LoginCred();
+        // void Set_CensusReport();
         vector<CensusData> Set_All_Requirements();
         vector<CensusData> Set_Households_Info();
         vector<CensusData> Set_Persons_Info();
@@ -73,7 +73,7 @@ Class Purpose: This is the ControlFlowClass class
     private:
         // Store memory information
         vector<CensusData> m_aCensusData;
-
+        
         // Set the members
         string m_fEmployeeDataFile = "employee.txt";
 

@@ -40,11 +40,11 @@ Class Purpose: This is the PersonClass class
 
         // Constructor with parameters
         PersonClass(string firstName, string lastName, string age, GenderType gender, MaritalType maritalStatus, 
-                    EthnicityType ethnicity, string occupation, EducationType educateLevel);
+            EthnicityType ethnicity, string occupation, EducationType educateLevel);
 
         // Setter Functions
-        void setPersonDetails(string firstName, string lastName, string age, GenderType gender, 
-            MaritalType maritalStatus, EthnicityType ethnicity, string occupation, EducationType educateLevel);
+        void setPersonDetails(string firstName, string lastName, string age, GenderType gender, MaritalType maritalStatus, 
+            EthnicityType ethnicity, string occupation, EducationType educateLevel);
         void setFirstName(); 
         void setLastName(); 
         void setAge(); 

@@ -22,7 +22,8 @@ using namespace std;
 // Class method implementations 
 // Defualt Constructor
 PersonClass::PersonClass() 
-    : m_strFirstName(""),
+    : m_aPersons(nullptr),
+      m_strFirstName(""),
       m_strLastName(""),
       m_strAgeRange(""),
       m_strCustomGender(""),
@@ -32,9 +33,8 @@ PersonClass::PersonClass()
       m_strCustomEducationLevel(""),
       m_eGenderType(GenderType::OTHER),
       m_eMaritalStatusType(MaritalType::OTHER),
-      m_eEducationLevelType(EducationType::OTHER),
       m_eEthnicityType(EthnicityType::OTHER),
-      m_aPersons(nullptr),
+      m_eEducationLevelType(EducationType::OTHER),
       m_intMaxPersonCount(0) {}
 
 // Constructor with parameters
@@ -51,7 +51,9 @@ PersonClass::PersonClass(string firstName, string lastName, string age, GenderTy
       m_eGenderType(gender),
       m_eMaritalStatusType(maritalStatus),
       m_eEthnicityType(ethnicity),
-      m_eEducationLevelType(educateLevel) {}
+      m_eEducationLevelType(educateLevel),
+      m_intMaxPersonCount(0),
+      m_aPersons(nullptr) {}
 
 
 void PersonClass::enterPersonDetails() 
@@ -79,9 +81,6 @@ object to user.
 */
 {
     while (true) {
-        // Delcare Local Variables
-        int m_intMaxPersonCount = 0;
-
         // Get the max person count for the household
         cout << "\n\nEnter the number of people in the household: ";
         if (!(cin >> m_intMaxPersonCount) || m_intMaxPersonCount < 0) {
