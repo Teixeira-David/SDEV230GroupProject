@@ -11,5 +11,8 @@ int main() {
     // Display user information
     user.displayEconomics();
 
+    // Save user information to a text file
+    user.saveToFile("Economics_info.txt");
+
     return 0;
 }
