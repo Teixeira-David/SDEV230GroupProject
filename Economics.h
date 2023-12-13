@@ -4,6 +4,7 @@
 #define Economics_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 class Economics {
@@ -16,6 +17,9 @@ public:
 
     // Function to display user information
     void displayEconomics() const;
+
+    //Function to save user information to a text file
+    void saveToFile(const std::string& filename) const;
 
 private:
     double grossIncome;
