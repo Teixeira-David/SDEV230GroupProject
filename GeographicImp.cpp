@@ -103,19 +103,21 @@ void geographicClass::menu_Swith_Control() {
 // getter functions
 
 // returns the variables function
-void geographic::get_State() {
-    return strState;
+string geographicClass::get_State() {
+    string dState = strState;
+    return dState;
 };
 
 // returns the variables function
-void geographic::get_Rurality() {
-    return intRurality;
+int geographicClass::get_Rurality() {
+    int dRurality = intRurality;
+    return dRurality;
 };
 
 // print functions
 void geographicClass::print_State() {
     if (strState == "") {
-        cout << "No state recorded.";
+        cout << "\nNo state recorded.";
     }
     else {
         cout << "\nState is: " << strState;
@@ -148,7 +150,7 @@ void geographicClass::print_Rurality() {
 
 void geographicClass::display_Geo_Menu() {
     cout << "\n\n---------------------------------------------------------------------------------------";
-    cout << "\n\t\t\t Please select from the menu options " << endl;
+    cout << "\n\t\t\tPlease select from the menu options " << endl;
     cout << "---------------------------------------------------------------------------------------";
     cout << "\n1.) Enter state";
     cout << "\n2.) Enter Rurality"; // not sure what word to use?

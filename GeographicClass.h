@@ -36,8 +36,8 @@ class geographicClass {
         void menu_Swith_Control(); // Menu control
 
         // getter
-        void get_State();
-        void get_Rurality();
+        string get_State();
+        int get_Rurality();
 
         // print
         void print_State(); // This displays the state or territory
