@@ -16,6 +16,19 @@ void Economics::displayEconomics() const {
     std::cout << "Employment Status: " << employmentStatus << std::endl;
 }
 
+void Economics::saveToFile(const std::string& filename) const {
+    std::ofstream outFile(filename);
+    if (outFile.is_open()) {
+        outFile << "Gross Icome: $" << grossIncome << std::endl;
+        outFile << "Employment Status: " << employmentStatus << std::endl;
+        outFile.close();
+        std::cout << "User economic information saved to " << filename << std::endl;
+    }
+    else {
+        std::cerr << "Error: Unable to open file " << filename << " for writing." << std::endl;
+    }
+}
+
 double Economics::getNumericInput(const std::string& prompt) const {
     double value;
     std::cout << prompt;
