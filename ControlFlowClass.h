@@ -12,6 +12,7 @@
 // Import the Preprocessor Directives
 #include <iostream>
 #include <string>
+#include "CensusData.h"
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -38,10 +39,11 @@ Class Purpose: This is the ControlFlowClass class
         // Setter Functions
         void Set_LoginCred();
         void Set_CensusReport();
-        void Set_Households_Info();
-        void Set_Persons_Info();
-        void Set_Economics_Info();
-        void Set_Geographics_Info();
+        vector<CensusData> Set_All_Requirements();
+        vector<CensusData> Set_Households_Info();
+        vector<CensusData> Set_Persons_Info();
+        vector<CensusData> Set_Economics_Info();
+        vector<CensusData> Set_Geographics_Info();
 
         // Getter Functions
         string Get_EmployeeData_File() const;
@@ -70,6 +72,7 @@ Class Purpose: This is the ControlFlowClass class
     // Delcare the private class members 'm_' -> member var indicator
     private:
         // Store memory information
+        vector<CensusData> m_aCensusData;
 
         // Set the members
         string m_fEmployeeDataFile = "employee.txt";

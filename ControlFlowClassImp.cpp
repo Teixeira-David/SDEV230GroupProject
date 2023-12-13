@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------
 // Author: David Teixeira 
-// Project: Exercise 11-5
+// Project: Group Final Project
 // Course: SDEV-230
 // Creation Date: 12/10/2023
 // ----------------------------------------------------------------
@@ -14,11 +14,13 @@
 #include <cstdlib>
 #include <fstream>
 #include <sstream>
+#include <functional>
 
 // Include the headers for class definition
 #include "ControlFlowClass.h"
-#include "UserClass.h"
 #include "PersonClass.h"
+#include "UserClass.h"
+#include "CensusData.h"
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -53,18 +55,18 @@ Function Purpose: This function displays the start message
     cout << "\n\n---------------------------------------------------------------------------------------";
     cout << "\n\t\t\t Welcome to CensusHub " << endl;
     cout << "---------------------------------------------------------------------------------------";
-    cout << "\nWelcome to the CensusReport Application, a comprehensive tool designed to ";
-    cout << "meticulously gather and record essential demographic data. As you navigate through this ";
-    cout << "application, you will be guided to input a variety of human demographic information. We ";
+    cout << "\nWelcome to the CensusReport Application, a comprehensive tool designed to \n";
+    cout << "meticulously gather and record essential demographic data. As you navigate through this \n";
+    cout << "application, you will be guided to input a variety of human demographic information. We \n";
     cout << "kindly request your attention to detail and accuracy in every entry.\n\n";
-    cout << "This software is engineered to facilitate a seamless data entry process, ensuring that ";
-    cout << "each piece of information contributes to a valuable census database. From basic personal ";
-    cout << "details to more intricate demographic aspects, your inputs play a crucial role in shaping ";
+    cout << "This software is engineered to facilitate a seamless data entry process, ensuring that \n";
+    cout << "each piece of information contributes to a valuable census database. From basic personal \n";
+    cout << "details to more intricate demographic aspects, your inputs play a crucial role in shaping \n";
     cout << "an accurate and meaningful demographic portrait.\n\n";
-    cout << "Please take a moment to review your responses thoroughly before finalizing each ";
-    cout << "submission. Your careful consideration ensures the integrity and reliability of the data, ";
+    cout << "Please take a moment to review your responses thoroughly before finalizing each \n";
+    cout << "submission. Your careful consideration ensures the integrity and reliability of the data, \n";
     cout << "which is pivotal for insightful analysis and informed decision-making.\n\n";
-    cout << "We appreciate your participation and diligence in contributing to this vital census ";
+    cout << "We appreciate your participation and diligence in contributing to this vital census \n";
     cout << "endeavor. Let's get started!\n";
     cout << "---------------------------------------------------------------------------------------\n";
 }
@@ -72,7 +74,7 @@ Function Purpose: This function displays the start message
 void ControlFlowClass::DisplayLoginMsg() 
 {
     cout << "\n---------------------------------------------------------------------------------------\n";
-    cout << "\n\tWelcome to CensusHub User Login Page\n";
+    cout << "\n\t\t\tWelcome to CensusHub User Login Page\n";
     cout << "---------------------------------------------------------------------------------------\n";
     cout << "Please choose one of the following options to proceed:\n\n";
     cout << "1. Log In: Use your existing Employee ID to access the application.\n";
@@ -80,27 +82,32 @@ void ControlFlowClass::DisplayLoginMsg()
     cout << "2. Create New User: Set up a new account with a unique Employee ID.\n";
     cout << "   Choose this option if you are a new user or need to create an additional account.\n";
     cout << "3. Exit: Exit the program.\n";
-    cout << "\nEnter '1' to Log In or '2' to Create New User. Otherwise, enter '3' to close the application.\n";
+    cout << "\nEnter '1' to Log In or '2' to Create New User. Otherwise, enter '3' to close the"; 
+    cout << "\napplication.\n";
     cout << "---------------------------------------------------------------------------------------\n\n";
 }
 
 void ControlFlowClass::Display_DashBoardMenu() {
     cout << "\n---------------------------------------------------------------------------------------\n";
-    cout << "\n\tMain Dashboard of CensusHub\n";
+    cout << "\n\t\t\t     Main Dashboard of CensusHub\n";
     cout << "---------------------------------------------------------------------------------------\n";
-    cout << "Welcome to the main dashboard of the CensusHub Application. Here, you can perform a variety of tasks related to household census data collection and management.\n";
+    cout << "Welcome to the main dashboard of the CensusHub Application. Here, you can perform a\n";
+    cout << "variety of tasks related to household census data collection and management.\n";
     cout << "Please select from the following options to proceed:\n\n";
-    cout << "1. Request Add New Household: Register a new household and provide its detailed information.\n";
-    cout << "2. Generate Census Report: Create and view comprehensive reports based on collected census data.\n";
+    cout << "1. Request Add New Household: Register a new household and provide its detailed\n";
+    cout << "information.\n";
+    cout << "2. Generate Census Report: Create and view comprehensive reports based on collected\n";
+    cout << "census data.\n";
     cout << "3. Exit the Program: Safely exit the CensusHub Application.\n";
-    cout << "\nChoose an option by entering the corresponding number. Your input is vital for effective census data management.\n";
+    cout << "\nChoose an option by entering the corresponding number. Your input is vital for\n"; 
+    cout << "effective census data management.\n";
     cout << "---------------------------------------------------------------------------------------\n\n";
 }
 
 void ControlFlowClass::Display_HouseHolds_Msg() 
 {
     cout << "\n---------------------------------------------------------------------------------------\n";
-    cout << "\n\tWelcome to the Household Information Collection Module of the CensusHub Application.\n";
+    cout << "Welcome to the Household Information Collection Module of the CensusHub Application.\n";
     cout << "---------------------------------------------------------------------------------------\n";
     cout << "To complete this section, you will need to provide the following household information:\n\n";
     cout << "1. Address: The full address of the household, including street name, number, city, and ZIP code.\n";
@@ -259,7 +266,7 @@ Function Purpose: This function is to display the menu options for the dashboard
 
             // Get the choice
             switch (choice) {
-                case 1: Set_Households_Info(); break; 
+                case 1: Set_Persons_Info(); break;
                 case 2: Generate_CensusReport(); break;
                 case 3: ExitProgram(); break; 
                 default: 
@@ -276,7 +283,82 @@ Function Purpose: This function is to display the menu options for the dashboard
     }
 }
 
-void ControlFlowClass::Set_Households_Info() 
+vector<CensusData> ControlFlowClass::Set_All_Requirements() 
+/*
+Function Name: Set_All_Requirements
+Function Purpose: This function is to set all the requirements for the census report entry
+*/
+{
+    // Clear out any existing data
+    m_aCensusData.clear();
+    
+    // Create a vector function for member functions
+    vector<function<vector<CensusData>()>> tasks = {
+        [this]() { return Set_Persons_Info(); },
+        [this]() { return Set_Households_Info(); },
+        [this]() { return Set_Economics_Info(); },
+        [this]() { return Set_Geographics_Info(); }
+    };
+
+    // Execute each task
+    for (auto& task : tasks) {
+        try {
+            vector<CensusData> result = task();
+            m_aCensusData.insert(m_aCensusData.end(), result.begin(), result.end());
+        } catch (const exception& e) {
+            cout << "Error: " << e.what() << "\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
+    }
+
+    return m_aCensusData;
+}
+
+vector<CensusData> ControlFlowClass::Set_Persons_Info() 
+/*
+Function Name: Set_Persons_Info
+Function Purpose: This function is to get the persons information
+*/
+{
+    // Declare Variables
+    vector<CensusData> data;
+
+    // Display the message
+    ClearScreen();
+    Display_Persons_Msg();
+
+    // Get the inputs from the user
+    PersonClass personObj;
+    PersonClass** persons = personObj.allocPersons();
+
+    // Check if persons is not null
+    if (persons != nullptr) {
+        // Loop through each person and get their details
+        for (int i = 0; i < personObj.getMaxPersonCount(); i++) {
+            persons[i]->enterPersonDetails();
+
+            // Construct the object
+            CensusData censusEntry(
+                persons[i] -> getFirstName(),
+                persons[i] -> getLastName(),
+                persons[i] -> getAgeRange(),
+                persons[i] -> getGender(),
+                persons[i] -> getMaritalStatus(),
+                persons[i] -> getEthnicity(),
+                persons[i] -> getEducation()
+            );
+            data.push_back(censusEntry);
+        }
+        // Deallocate memory when done
+        personObj.deallocPersons(persons, personObj.getMaxPersonCount());
+    }
+
+    // Return the object
+    return data;
+}
+
+vector<CensusData> ControlFlowClass::Set_Households_Info() 
 /*
 Function Name: Get_Household_Info
 Function Purpose: This function is to get the household information
@@ -288,29 +370,13 @@ Function Purpose: This function is to get the household information
 
     // Get the inputs from the user
 
+    // Check if household is not null
 
-    // Get next set of data
-    Set_Persons_Info();
+    // Return the object
+    
 }
 
-void ControlFlowClass::Set_Persons_Info() 
-/*
-Function Name: Set_Persons_Info
-Function Purpose: This function is to get the persons information
-*/
-{
-    // Display the message
-    ClearScreen();
-    Display_Persons_Msg();
-
-    // Get the inputs from the user
-
-
-    // Get next set of data
-    Set_Economics_Info();
-}
-
-void ControlFlowClass::Set_Economics_Info() 
+vector<CensusData> ControlFlowClass::Set_Economics_Info() 
 /*
 Function Name: Set_Economics_Info
 Function Purpose: This function is to get the econmics information
@@ -323,11 +389,11 @@ Function Purpose: This function is to get the econmics information
     // Get the inputs from the user
 
 
-    // Get next set of data
-    Set_Geographics_Info();
+    // Return the object
+
 }
 
-void ControlFlowClass::Set_Geographics_Info() 
+vector<CensusData> ControlFlowClass::Set_Geographics_Info() 
 /*
 Function Name: Set_Geographics_Info
 Function Purpose: This function is to get the econmics information
@@ -344,7 +410,7 @@ Function Purpose: This function is to get the econmics information
 
 }
 
-void ControlFlowClass::Generate_CensusReport() 
+vector<CensusData> ControlFlowClass::Generate_CensusReport() 
 /*
 Function Name: generateCensusReport
 Function Purpose: This function is to get the econmics information

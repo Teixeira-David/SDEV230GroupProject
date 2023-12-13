@@ -72,6 +72,7 @@ Class Purpose: This is the PersonClass class
         string getEthnicity() const;
         string getOccupation() const;
         string getEducation() const;
+        int getMaxPersonCount() const;
 
         // Enum to string
         string genderTypeToString() const;
@@ -88,6 +89,9 @@ Class Purpose: This is the PersonClass class
         void printEthnicity() const;
         void printOccupation() const;
         void printEducationLevel() const;
+        
+        // Format for file dump
+        string formatForFile() const;
 
     // Delcare the private class members 'm_' -> member var indicator
     private:

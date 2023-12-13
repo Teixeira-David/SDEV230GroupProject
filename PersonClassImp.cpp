@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------
 // Author: David Teixeira 
-// Project: Exercise 11-5
+// Project: Group Final Project
 // Course: SDEV-230
 // Creation Date: 11/24/2023
 // ----------------------------------------------------------------
@@ -11,6 +11,7 @@
 #include <limits>
 #include <stdexcept>
 #include <array>
+#include <sstream>
 
 // Include the headers for class definition
 #include "PersonClass.h"
@@ -32,7 +33,9 @@ PersonClass::PersonClass()
       m_eGenderType(GenderType::OTHER),
       m_eMaritalStatusType(MaritalType::OTHER),
       m_eEducationLevelType(EducationType::OTHER),
-      m_eEthnicityType(EthnicityType::OTHER) {}
+      m_eEthnicityType(EthnicityType::OTHER),
+      m_aPersons(nullptr),
+      m_intMaxPersonCount(0) {}
 
 // Constructor with parameters
 PersonClass::PersonClass(string firstName, string lastName, string age, GenderType gender, MaritalType maritalStatus, 
@@ -96,8 +99,6 @@ object to user.
             // Allocate memory for the PersonClass objects
             for (int i = 0; i < m_intMaxPersonCount; i++) {
                 m_aPersons[i] = new PersonClass();
-
-                // Call the enterPersonDetails method to get all the data entry
                 m_aPersons[i]->enterPersonDetails();
             }
             // Return the array of pointers. This return object must be paired with the destroy function 
@@ -226,25 +227,26 @@ Function Purpose: This function is to sets the age of the person
     while (true) {
         try {
             // Delcare Local Variables
-            array<string, 17> ageRanges = {
+            int arrayMaxCount = 18;
+            array<string, 18> ageRanges = {
                 "Under 5 Years Old", "5 to 9 Years Old", "10 to 14 Years Old", 
                 "15 to 19 Years Old", "20 to 24 Years Old", "25 to 29 Years Old", 
-                "30 to 34 Years Old", "40 to 44 Years Old", "45 to 49 Years Old", 
-                "50 to 54 Years Old", "55 to 59 Years Old", "60 to 64 Years Old", 
-                "65 to 69 Years Old", "70 to 74 Years Old", "75 to 79 Years Old", 
-                "80 to 84 Years Old", "85 and over"};
+                "30 to 34 Years Old", "35 to 29 Years Old", "40 to 44 Years Old", 
+                "45 to 49 Years Old", "50 to 54 Years Old", "55 to 59 Years Old", 
+                "60 to 64 Years Old", "65 to 69 Years Old", "70 to 74 Years Old", 
+                "75 to 79 Years Old", "80 to 84 Years Old", "85 and over"};
             int choice;
 
             // Display the choices
-            cout << "Select the age range:\n";
+            cout << "\n\nSelect the age range:\n\n";
             for (int i = 0; i < ageRanges.size(); ++i) {
                 cout << (i + 1) << ".) " << ageRanges[i] << "\n";
             }
 
             // Get the choice
-            cout << "Enter your choice: ";
+            cout << "\n\nEnter your choice: ";
             cin >> choice;
-            if (cin.fail() || choice < 1 || choice > 17) {
+            if (cin.fail() || choice < 1 || choice > arrayMaxCount) {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 throw runtime_error("Invalid selection. Please enter a number between 1 and 17.");
@@ -276,14 +278,14 @@ Function Purpose: This function is to sets the gender of the person.
             int choice;
 
             // Display the choices
-            cout << "Select the gender:\n";
+            cout << "\n\nSelect the gender:\n\n";
             cout << "1. Female\n";
             cout << "2. Male\n";
             cout << "3. Non-Binary\n";
             cout << "4. Transgender\n";
             cout << "5. Genderqueer\n";
             cout << "6. Other\n";
-            cout << "Enter your choice: ";
+            cout << "\n\nEnter your choice: ";
 
             // Get the input choice
             cin >> choice;
@@ -335,7 +337,7 @@ Function Purpose: This function is to sets the marital status of the person.
             int choice;
 
             // Display the choices
-            cout << "Select the marital status:\n";
+            cout << "\n\nSelect the marital status:\n\n";
             cout << "1. Single\n";
             cout << "2. Married\n";
             cout << "3. Separated\n";
@@ -343,7 +345,7 @@ Function Purpose: This function is to sets the marital status of the person.
             cout << "5. Widowed\n";
             cout << "6. Civil Partnership\n";
             cout << "7. Other\n";
-            cout << "Enter your choice: ";
+            cout << "\n\nEnter your choice: ";
 
             // Get the input choice
             cin >> choice;
@@ -391,17 +393,16 @@ Function Purpose: This function is to gets the occupation of the person
 */
 {
     while (true) {
-        // Delcare Local Variables
+        // Declare Local Variables
         string strInput = "";
+
+        // Clear any errors and ignore any characters remaining in the input buffer
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         // Get the user input
         cout << "\n\nPlease enter the occupation of household member: ";
-        if (!(cin >> strInput)) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Error reading input. Please try again. \n";
-            continue;
-        }
+        getline(cin, strInput);  // Using getline to read the whole line
 
         try {
             // Check if the input is empty
@@ -409,10 +410,10 @@ Function Purpose: This function is to gets the occupation of the person
                 throw runtime_error("Occupation cannot be empty.");
             }
 
-            // Set the param to input if valid
+            // Set the member variable to input if valid
             m_strOccupation = strInput;
             break;
-        
+
         // End Catch    
         } catch (const runtime_error& e) {
             cout << "Error: " << e.what() << "\n";
@@ -435,7 +436,7 @@ Function Purpose: This function is to sets the gender of the person.
             int choice;
 
             // Display the choices
-            cout << "Select the ethnicity:\n";
+            cout << "\n\nSelect the ethnicity:\n\n";
             cout << "1. Caucasian\n";
             cout << "2. African\n";
             cout << "3. Latino\n";
@@ -443,7 +444,7 @@ Function Purpose: This function is to sets the gender of the person.
             cout << "5. Pacific Islander\n";
             cout << "6. Mixed Ethnicity\n";
             cout << "7. Other\n";
-            cout << "Enter your choice: ";
+            cout << "\n\nEnter your choice: ";
 
             // Get the input choice
             cin >> choice;
@@ -495,7 +496,7 @@ Function Purpose: This function is to sets the education level of the person.
             int choice;
 
             // Display the choices
-            cout << "Select the education level:\n";
+            cout << "\n\nSelect the education level:\n\n";
             cout << "1. No Schooling\n";
             cout << "2. Some Primary Education\n";
             cout << "3. Primary Education\n";
@@ -507,7 +508,7 @@ Function Purpose: This function is to sets the education level of the person.
             cout << "9. Post Graduate\n";
             cout << "10. Advanced Degree\n";
             cout << "11. Other\n";
-            cout << "Enter your choice: ";
+            cout << "\n\nEnter your choice: ";
             
             // Get the input choice
             cin >> choice;            
@@ -621,6 +622,12 @@ string PersonClass::getOccupation() const
 string PersonClass::getEducation() const 
 {
     return m_strCustomEducationLevel;
+}
+
+// Method Purpose: Get the custom education
+int PersonClass::getMaxPersonCount() const 
+{
+    return m_intMaxPersonCount;
 }
 
 string PersonClass::genderTypeToString() const 
@@ -748,4 +755,24 @@ void PersonClass::printOccupation() const
 void PersonClass::printEducationLevel() const
 {
     cout << "Education Level: " << educationTypeToString() << endl;
+}
+
+// Method to format for file
+string PersonClass::formatForFile() const 
+{
+    // Declare Local Variables
+    stringstream ss;
+
+    // Concatenate member variables into a string
+    ss << getFirstName() << ", "
+       << getLastName() << ", "
+       << getAgeRange() << ", "
+       << genderTypeToString() << ", "
+       << maritalTypeToString() << ", "
+       << ethnicityTypeToString() << ", "
+       << getOccupation() << ", "
+       << educationTypeToString();
+
+    // Return the concatenated string
+    return ss.str();   
 }
