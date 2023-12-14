@@ -10,7 +10,6 @@
 #include <string>
 
 // Import header file for base class
-#include "PersonClass.h"
 #include "ControlFlowClass.h"
 
 // Provide scope to identifiers inside the standard library
@@ -27,6 +26,7 @@ Function Purpose: This is the main function where the program starts
 */  
 {
     try {
+        
         ControlFlowClass controlFlow; // Create an instance of ControlFlowClass
 
         controlFlow.LoginMenu(); // Start the application with the login menu

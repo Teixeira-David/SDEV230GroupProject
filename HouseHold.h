@@ -44,7 +44,7 @@ class Household{
 
     private:
         // Store memory information
-        Household** m_aHouseholds;
+        // Household** m_aHouseholds;
         int m_intMaxHouseholdCount = 1;
 
         //variables

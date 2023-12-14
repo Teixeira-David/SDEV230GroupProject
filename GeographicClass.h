@@ -32,7 +32,7 @@ class geographicClass {
         geographicClass();
 
         // Constructor parameters
-        geographicClass(int rurality, string state);
+        geographicClass(int rurality, string state, string ruralityString);
 
         // setter
         void set_Rurality(); // Gets the Rural, Urban, or suburban / rurality
@@ -58,8 +58,8 @@ class geographicClass {
     // Delcare the private class members    
     private:
         // Store memory information
-        geographicClass** m_aGeographics;
-        int m_intMaxGeographicCount;
+        // geographicClass** m_aGeographics;
+        int m_intMaxGeographicCount = 1;
 
         // Set the members
         int intRurality;

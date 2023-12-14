@@ -23,6 +23,7 @@ using namespace std;
 // Defualt Constructor
 PersonClass::PersonClass() 
     : m_aPersons(nullptr),
+      m_intMaxPersonCount(0),
       m_strFirstName(""),
       m_strLastName(""),
       m_strAgeRange(""),
@@ -33,14 +34,15 @@ PersonClass::PersonClass()
       m_strCustomEducationLevel(""),
       m_eGenderType(GenderType::OTHER),
       m_eMaritalStatusType(MaritalType::OTHER),
-      m_eEthnicityType(EthnicityType::OTHER),
       m_eEducationLevelType(EducationType::OTHER),
-      m_intMaxPersonCount(0) {}
+      m_eEthnicityType(EthnicityType::OTHER) {}
 
 // Constructor with parameters
 PersonClass::PersonClass(string firstName, string lastName, string age, GenderType gender, MaritalType maritalStatus, 
-        EthnicityType ethnicity, string occupation, EducationType educateLevel)
-    : m_strFirstName(firstName),
+                         EthnicityType ethnicity, string occupation, EducationType educateLevel)
+    : m_aPersons(nullptr),
+      m_intMaxPersonCount(0),
+      m_strFirstName(firstName),
       m_strLastName(lastName),
       m_strAgeRange(age),
       m_strCustomGender(""),
@@ -50,10 +52,8 @@ PersonClass::PersonClass(string firstName, string lastName, string age, GenderTy
       m_strCustomEducationLevel(""),
       m_eGenderType(gender),
       m_eMaritalStatusType(maritalStatus),
-      m_eEthnicityType(ethnicity),
       m_eEducationLevelType(educateLevel),
-      m_intMaxPersonCount(0),
-      m_aPersons(nullptr) {}
+      m_eEthnicityType(ethnicity) {}
 
 
 void PersonClass::enterPersonDetails() 
@@ -98,7 +98,7 @@ object to user.
             // Allocate memory for the PersonClass objects
             for (int i = 0; i < m_intMaxPersonCount; i++) {
                 m_aPersons[i] = new PersonClass();
-                m_aPersons[i]->enterPersonDetails();
+                // m_aPersons[i]->enterPersonDetails();
             }
             // Return the array of pointers. This return object must be paired with the destroy function 
             return m_aPersons;
@@ -223,39 +223,46 @@ Function Name: setAge
 Function Purpose: This function is to sets the age of the person
 */
 {
+    // Delcare Local Variables
+    array<string, 18> ageRanges = {
+        "Under 5 Years Old", "5 to 9 Years Old", "10 to 14 Years Old", 
+        "15 to 19 Years Old", "20 to 24 Years Old", "25 to 29 Years Old", 
+        "30 to 34 Years Old", "35 to 39 Years Old", "40 to 44 Years Old", 
+        "45 to 49 Years Old", "50 to 54 Years Old", "55 to 59 Years Old", 
+        "60 to 64 Years Old", "65 to 69 Years Old", "70 to 74 Years Old", 
+        "75 to 79 Years Old", "80 to 84 Years Old", "85 and over"};
+
+    // Loop to handle user input until a valid choice is made
     while (true) {
         try {
-            // Delcare Local Variables
-            int arrayMaxCount = 18;
-            array<string, 18> ageRanges = {
-                "Under 5 Years Old", "5 to 9 Years Old", "10 to 14 Years Old", 
-                "15 to 19 Years Old", "20 to 24 Years Old", "25 to 29 Years Old", 
-                "30 to 34 Years Old", "35 to 29 Years Old", "40 to 44 Years Old", 
-                "45 to 49 Years Old", "50 to 54 Years Old", "55 to 59 Years Old", 
-                "60 to 64 Years Old", "65 to 69 Years Old", "70 to 74 Years Old", 
-                "75 to 79 Years Old", "80 to 84 Years Old", "85 and over"};
-            int choice;
-
-            // Display the choices
+            // Display the age range choices to the user
             cout << "\n\nSelect the age range:\n\n";
-            for (int i = 0; i < ageRanges.size(); ++i) {
+            for (size_t i = 0; i < ageRanges.size(); ++i) {
                 cout << (i + 1) << ".) " << ageRanges[i] << "\n";
             }
 
-            // Get the choice
-            cout << "\n\nEnter your choice: ";
+            // Prompt the user to enter their choice
+            cout << "\n\nEnter your choice (1-" << ageRanges.size() << "): ";
+            int choice;
             cin >> choice;
-            if (cin.fail() || choice < 1 || choice > arrayMaxCount) {
-                cin.clear();
+
+            // Check for input failure (non-integer input)
+            if (cin.fail()) {
+                cin.clear(); 
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                throw runtime_error("Invalid selection. Please enter a number between 1 and 17.");
-            } else {
-                m_strAgeRange = ageRanges[choice - 1];
-                cout << "Selected age range: " << m_strAgeRange << "\n";
-                break; 
+                throw runtime_error("Invalid input. Please enter a number.");
             }
 
-        // End Catch
+            // Check if the choice is outside the valid range
+            if (choice < 1 || choice > static_cast<int>(ageRanges.size())) {
+                throw runtime_error("Invalid selection. Please enter a number within the valid range.");
+            }
+
+            // Set the age range based on the user's choice
+            m_strAgeRange = ageRanges[static_cast<size_t>(choice - 1)];
+            cout << "Selected age range: " << m_strAgeRange << "\n";
+            break;  
+
         } catch (const runtime_error& e) {
             cout << "Error: " << e.what() << "\n";
             cin.clear();

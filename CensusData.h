@@ -41,7 +41,12 @@ Class Purpose: This is the CensusData class
         CensusData(const geographicClass& geographicData);
             
         // Setter Functions
-
+        void setPerson(const PersonClass& personData);
+        void setHousehold(const Household& householdData);
+        void setEconomics(const Economics& economicData);
+        void setGeographic(const geographicClass& geographicData);
+        void setCensusDataFile(string censusDataFile);
+        
         // Getter Functions
         string Get_CensusData_File() const;
         vector<CensusData> Get_Census_Data() const;

@@ -35,18 +35,18 @@ Class Purpose: This is the ControlFlowClass class
 
         // Constructor with parameters
 
-
         // Setter Functions
         // void Set_LoginCred();
         // void Set_CensusReport();
-        vector<CensusData> Set_All_Requirements();
-        vector<CensusData> Set_Households_Info();
-        vector<CensusData> Set_Persons_Info();
-        vector<CensusData> Set_Economics_Info();
-        vector<CensusData> Set_Geographics_Info();
+        void Set_All_Requirements();
+        void Set_Households_Info(CensusData& censusData);
+        void Set_Persons_Info(CensusData& censusData);
+        void Set_Economics_Info(CensusData& censusData);
+        void Set_Geographics_Info(CensusData& censusData);
 
         // Getter Functions
         string Get_EmployeeData_File() const;
+        string getCurrentWorkingDirectory() const;
         
         // Execution memory methods
 
@@ -67,7 +67,14 @@ Class Purpose: This is the ControlFlowClass class
 
 
         // Functions to print member information
+        void displayTable(const vector<vector<string>>& data) const;
+        void displayCensusData(const string& fileName) const;
 
+        // Format for file dump
+        string FormatCensusDataForFile() const;
+        void WriteCensusDataToFile(const string& fileName) const;
+        vector<string> readFileContents(const string& fileName) const;
+        vector<vector<string>> parseData(const vector<string>& lines) const;
 
     // Delcare the private class members 'm_' -> member var indicator
     private:

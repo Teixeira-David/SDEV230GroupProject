@@ -37,6 +37,26 @@ CensusData::CensusData(const Economics& economicData) : economic(economicData) {
 // Constructor with Household object
 CensusData::CensusData(const geographicClass& geographicData) : geographic(geographicData) {}
 
+// Setter for PersonClass
+void CensusData::setPerson(const PersonClass& personData) {
+    person = personData;
+}
+
+// Setter for Household
+void CensusData::setHousehold(const Household& householdData) {
+    household = householdData;
+}
+
+// Setter for Economics
+void CensusData::setEconomics(const Economics& economicData) {
+    economic = economicData;
+}
+
+// Setter for geographicClass
+void CensusData::setGeographic(const geographicClass& geographicData) {
+    geographic = geographicData;
+}
+
 // Method to format for file
 string CensusData::formatForFile() const 
 {

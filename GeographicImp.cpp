@@ -16,11 +16,11 @@ using namespace std;
 
 // Defualt Constructor
 geographicClass::geographicClass()
-    : intRurality(0), strState(""), strRurality("") {}
+    : intRurality(0), strRurality(""), strState("") {}
 
 // Constructor with parameters
-geographicClass::geographicClass(int rurality, string state)
-    : intRurality(rurality), strState(state), strRurality("") {}
+geographicClass::geographicClass(int rurality, string ruralityString, string state)
+    : intRurality(rurality), strRurality(ruralityString), strState(state) {}
 
 // Enter Geo inputs function
 
@@ -202,17 +202,6 @@ object to user.
 */
 {
     while (true) {
-        // Delcare Local Variables
-        int m_intMaxGeographicCount = 0;
-
-        // Get the max Geographic count for the Geographic
-        cout << "\n\nEnter the number of people in the Geographic: ";
-        if (!(cin >> m_intMaxGeographicCount) || m_intMaxGeographicCount < 0) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a positive number.\n";
-            continue;
-        }
         // Create the null pointer
         geographicClass** m_aGeographics = nullptr;
         try {
@@ -222,7 +211,7 @@ object to user.
             // Allocate memory for the Geographic objects
             for (int i = 0; i < m_intMaxGeographicCount; i++) {
                 m_aGeographics[i] = new geographicClass();
-                m_aGeographics[i]->enterGeographicDetails();
+                // m_aGeographics[i]->enterGeographicDetails();
             }
             // Return the array of pointers. This return object must be paired with the destroy function 
             return m_aGeographics;

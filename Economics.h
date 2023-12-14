@@ -38,14 +38,15 @@ public:
 
 private:
     // Store memory information
-    Economics** m_aEconomics;
-    int m_intMaxEconomicCount;
+    // Economics** m_aEconomics;
+    int m_intMaxEconomicCount = 1;
 
     double grossIncome;
     std::string employmentStatus;
     
     // Helper function to validate numeric input
-    double getNumericInput(const std::string& prompt) const;
+    double getNumericInput(const std::string& prompt);
+    // double getNumericInput(const std::string& prompt) const;
 };
 
 #endif // Economics_H

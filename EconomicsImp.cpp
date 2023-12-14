@@ -35,7 +35,7 @@ void Economics::saveToFile(const std::string& filename) const {
     }
 }
 
-double Economics::getNumericInput(const std::string& prompt) const {
+double Economics::getNumericInput(const std::string& prompt) {
     double value;
     std::cout << prompt;
     while (!(std::cin >> value)) {
@@ -46,6 +46,18 @@ double Economics::getNumericInput(const std::string& prompt) const {
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the buffer
     return value;
 }
+
+// double Economics::getNumericInput(const std::string& prompt) const {
+//     double value;
+//     std::cout << prompt;
+//     while (!(std::cin >> value)) {
+//         std::cin.clear();
+//         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//         std::cout << "Invalid input. Please enter a numeric value: ";
+//     }
+//     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the buffer
+//     return value;
+// }
 
 // Method Purpose: Get the gross income
 double Economics::getGrossIncome() const 
@@ -78,9 +90,6 @@ object to user.
 */
 {
     while (true) {
-        // Delcare Local Variables
-        int m_intMaxEconomicCount = 0;
-        
         // Create the null pointer
         Economics** m_aEconomics = nullptr;
         try {
@@ -90,7 +99,7 @@ object to user.
             // Allocate memory for the Economics objects
             for (int i = 0; i < m_intMaxEconomicCount; i++) {
                 m_aEconomics[i] = new Economics();
-                m_aEconomics[i]->enterEconomicsDetails();
+                // m_aEconomics[i]->enterEconomicsDetails();
             }
             // Return the array of pointers. This return object must be paired with the destroy function 
             return m_aEconomics;

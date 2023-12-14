@@ -16,6 +16,14 @@
 #include <sstream>
 #include <functional>
 
+// Determine which preprocessor directive to use
+#if defined(_WIN32) || defined(_WIN64)
+    #include <windows.h>
+#else
+    #include <unistd.h>
+    #include <limits.h>
+#endif
+
 // Include the headers for class definition
 #include "ControlFlowClass.h"
 #include "PersonClass.h"
@@ -33,7 +41,7 @@ using namespace std;
 ControlFlowClass::ControlFlowClass() {
          ClearScreen();
          DisplayStartUpMsg();
-         // m_aCensusData = vector<CensusData>();
+         m_aCensusData = vector<CensusData>();
 }
 
 void ControlFlowClass::ClearScreen() 
@@ -270,7 +278,7 @@ Function Purpose: This function is to display the menu options for the dashboard
 
             // Get the choice
             switch (choice) {
-                case 1: Set_Persons_Info(); break;
+                case 1: Set_All_Requirements(); break;
                 case 2: Generate_CensusReport(); break;
                 case 3: ExitProgram(); break; 
                 default: 
@@ -287,39 +295,50 @@ Function Purpose: This function is to display the menu options for the dashboard
     }
 }
 
-vector<CensusData> ControlFlowClass::Set_All_Requirements() 
+void ControlFlowClass::Set_All_Requirements() 
 /*
 Function Name: Set_All_Requirements
 Function Purpose: This function is to set all the requirements for the census report entry
 */
 {
-    // Clear out any existing data
-    m_aCensusData.clear();
-    
-    // Create a vector function for member functions
-    vector<function<vector<CensusData>()>> tasks = {
-        [this]() { return Set_Persons_Info(); },
-        [this]() { return Set_Households_Info(); },
-        [this]() { return Set_Economics_Info(); },
-        [this]() { return Set_Geographics_Info(); }
-    };
+    // Declare Local Variables
+    bool addMore = true;
 
-    // Execute each task
-    for (auto& task : tasks) {
-        try {
-            vector<CensusData> result = task();
-            m_aCensusData.insert(m_aCensusData.end(), result.begin(), result.end());
-        } catch (const exception& e) {
-            cout << "Error: " << e.what() << "\n";
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
+    while (addMore) {
+        // Clear out any existing data
+        m_aCensusData.clear();
+
+        // Create a single CensusData object
+        CensusData censusData;
+
+        // Assuming each Set_..._Info method sets the respective part of censusData
+        Set_Persons_Info(censusData);
+        Set_Households_Info(censusData);
+        Set_Economics_Info(censusData);
+        Set_Geographics_Info(censusData);
+
+        // Add the fully populated censusData to m_aCensusData
+        m_aCensusData.push_back(censusData);
+
+        // Write to file 
+        WriteCensusDataToFile(censusData.Get_CensusData_File());
+
+        // Ask user if they want to add another household
+        cout << "Do you want to add another household? (y/n): ";
+        char response;
+        cin >> response;
+
+        // Check if the response is not yes
+        if (response != 'y' && response != 'Y') {
+            addMore = false;
+        }        
     }
 
-    return m_aCensusData;
+    // Return to the main dashboard
+    Main_Dashboard();
 }
 
-vector<CensusData> ControlFlowClass::Set_Persons_Info() 
+void ControlFlowClass::Set_Persons_Info(CensusData& censusData) 
 /*
 Function Name: Set_Persons_Info
 Function Purpose: This function is to get the persons information
@@ -339,23 +358,19 @@ Function Purpose: This function is to get the persons information
         for (int i = 0; i < personObj.getMaxPersonCount(); i++) {
             persons[i]->enterPersonDetails();
 
-            // Construct the CensusData object
-            CensusData censusEntry(
-                // Pass the entire PersonClass object
-                *persons[i]
-            );
-            m_aCensusData.push_back(censusEntry);
+          // Set the last person's data in censusData
+            if (i == personObj.getMaxPersonCount() - 1) {
+                censusData.setPerson(*persons[i]);
+            }
         }
 
         // Deallocate memory when done
         personObj.deallocPersons(persons, personObj.getMaxPersonCount());
     }
-
-    // Return the aggregated census data
-    return m_aCensusData;
 }
 
-vector<CensusData> ControlFlowClass::Set_Households_Info() 
+
+void ControlFlowClass::Set_Households_Info(CensusData& censusData) 
 /*
 Function Name: Get_Household_Info
 Function Purpose: This function is to get the household information
@@ -375,23 +390,18 @@ Function Purpose: This function is to get the household information
         for (int i = 0; i < householdObj.getMaxHouseholdCount(); i++) {
             households[i]->enterHouseholdDetails();
 
-            // Construct the CensusData object using household data
-            CensusData censusEntry(
-                // Pass the entire HouseHold object
-                *households[i]
-            );
-            m_aCensusData.push_back(censusEntry);
+          // Set the last person's data in censusData
+            if (i == householdObj.getMaxHouseholdCount() - 1) {
+                censusData.setHousehold(*households[i]);
+            }
         }
 
         // Deallocate memory when done
         householdObj.deallocHouseholds(households, householdObj.getMaxHouseholdCount());
     }
-
-    // Return the aggregated census data
-    return m_aCensusData;
 }
 
-vector<CensusData> ControlFlowClass::Set_Economics_Info() 
+void ControlFlowClass::Set_Economics_Info(CensusData& censusData) 
 /*
 Function Name: Set_Economics_Info
 Function Purpose: This function is to get the econmics information
@@ -411,23 +421,18 @@ Function Purpose: This function is to get the econmics information
         for (int i = 0; i < economicObj.getMaxEconomicCount(); i++) {
             economics[i]->enterEconomicsDetails();
 
-            // Construct the CensusData object using household data
-            CensusData censusEntry(
-                // Pass the entire HouseHold object
-                *economics[i]
-            );
-            m_aCensusData.push_back(censusEntry);
+          // Set the last person's data in censusData
+            if (i == economicObj.getMaxEconomicCount() - 1) {
+                censusData.setEconomics(*economics[i]);
+            }
         }
 
         // Deallocate memory when done
         economicObj.deallocEconomics(economics, economicObj.getMaxEconomicCount());
     }
-
-    // Return the aggregated census data
-    return m_aCensusData;
 }
 
-vector<CensusData> ControlFlowClass::Set_Geographics_Info() 
+void ControlFlowClass::Set_Geographics_Info(CensusData& censusData) 
 /*
 Function Name: Set_Geographics_Info
 Function Purpose: This function is to get the econmics information
@@ -446,21 +451,197 @@ Function Purpose: This function is to get the econmics information
         // Loop through each household and get their details
         for (int i = 0; i < geographicObj.getMaxGeographicCount(); i++) {
             geographic[i]->enterGeographicDetails();
-
-            // Construct the CensusData object using household data
-            CensusData censusEntry(
-                // Pass the entire HouseHold object
-                *geographic[i]
-            );
-            m_aCensusData.push_back(censusEntry);
+            
+          // Set the last person's data in censusData
+            if (i == geographicObj.getMaxGeographicCount() - 1) {
+                censusData.setGeographic(*geographic[i]);
+            }
         }
 
         // Deallocate memory when done
         geographicObj.deallocGeographics(geographic, geographicObj.getMaxGeographicCount());
     }
+}
 
-    // Return the aggregated census data
-    return m_aCensusData;
+string ControlFlowClass::FormatCensusDataForFile() const 
+/*
+Function Name: FormatCensusDataForFile
+Function Purpose: This function is format the data with no trailing whitespace and aggregates the data
+    by comma. Preps for file dump.
+*/
+{
+    // Declare Local Variables
+    stringstream ss;
+
+    // Iterate over all CensusData objects and format them for file output
+    for (const auto& censusData : m_aCensusData) {
+        string dataLine = censusData.formatForFile();
+
+        // Trim right whitespace (including tabs and new lines)
+        dataLine.erase(find_if(dataLine.rbegin(), dataLine.rend(), [](unsigned char ch) {
+            return !isspace(ch);
+        }).base(), dataLine.end());
+
+        // Add a comma to the end of the line
+        ss << dataLine;
+        if (&censusData != &m_aCensusData.back()) {
+            ss << "\n";
+        }
+    }
+
+    return ss.str();
+}
+
+void ControlFlowClass::WriteCensusDataToFile(const string& filename) const 
+/*
+Function Name: WriteCensusDataToFile
+Function Purpose: This function is dumps data to file.
+*/
+{
+    // Open the file for writing
+    ofstream fileStream(filename, ios::out | ios::trunc);
+    if (!fileStream) {
+        cerr << "Error opening file: " << filename << endl;
+        return;
+    }
+
+    // Format the data for file output
+    string formattedData = FormatCensusDataForFile();
+    fileStream << formattedData;
+
+    fileStream.close();
+}
+
+vector<string> ControlFlowClass::readFileContents(const string& filename) const
+/*
+Function Name: readFileContents
+Function Purpose: This function reads the data from the file
+*/
+{
+    // Declare Local Variables
+    vector<string> lines;
+    ifstream fileStream(filename);
+
+    // Check if the file is open
+    if (!fileStream) {
+        cerr << "Error opening file: " << filename << endl;
+        return lines;
+    }
+
+    // Read the file contents
+    string line;
+    while (getline(fileStream, line)) {
+        lines.push_back(line);
+    }
+
+    return lines;
+}
+
+vector<vector<string>> ControlFlowClass::parseData(const vector<string>& lines) const
+/*
+Function Name: parseData
+Function Purpose: This function parse the data from the file
+*/
+{
+    // Declare Local Variables
+    vector<vector<string>> parsedData;
+    for (const auto& line : lines) {
+        stringstream ss(line);
+        string item;
+        vector<string> household;
+
+        // Parse the line by comma
+        while (getline(ss, item, ',')) {
+            household.push_back(item);
+        }
+        
+        // Add the parsed data to the vector
+        parsedData.push_back(household);
+    }
+    return parsedData;
+}
+
+void ControlFlowClass::displayTable(const vector<vector<string>>& data) const
+/*
+Function Name: displayTable
+Function Purpose: This function displays the data to a table
+*/
+{
+    // Print the header
+    cout << left
+     << setw(18) << "\n\nFirst Name"
+     << setw(15) << "Last Name"
+     << setw(15) << "Age Range"
+     << setw(10) << "Gender"
+     << setw(20) << "Marital Status"
+     << setw(15) << "Ethnicity"
+     << setw(15) << "Occupation"
+     << setw(20) << "Education Level"
+     << setw(30) << "Address"
+     << setw(20) << "Residence Type"
+     << setw(20) << "Owner of Household"
+     << setw(15) << "Gross Income"
+     << setw(20) << "Employment Status"
+     << setw(15) << "State"
+     << setw(15) << "Urbanization" << endl;
+    cout << string(260, '-') << endl;
+
+    // Print each household's data
+    for (const auto& household : data) {
+        cout << left
+             << setw(15) << (household.size() > 0 ? household[0] : "")
+             << setw(15) << (household.size() > 1 ? household[1] : "")
+             << setw(15) << (household.size() > 2 ? household[2] : "")
+             << setw(10) << (household.size() > 3 ? household[3] : "")
+             << setw(20) << (household.size() > 4 ? household[4] : "")
+             << setw(15) << (household.size() > 5 ? household[5] : "")
+             << setw(15) << (household.size() > 6 ? household[6] : "")
+             << setw(20) << (household.size() > 7 ? household[7] : "")
+             << setw(30) << (household.size() > 8 ? household[8] : "")
+             << setw(20) << (household.size() > 9 ? household[9] : "")
+             << setw(20) << (household.size() > 10 ? household[10] : "")
+             << setw(15) << (household.size() > 11 ? household[11] : "")
+             << setw(20) << (household.size() > 12 ? household[12] : "")
+             << setw(15) << (household.size() > 13 ? household[13] : "")
+             << setw(15) << (household.size() > 14 ? household[14] : "") << endl;
+    }
+    // cout << endl;
+}
+
+void ControlFlowClass::displayCensusData(const string& filename) const
+/*
+Function Name: displayCensusData
+Function Purpose: This function displays the data 
+*/
+{
+    // Declare Local Variables
+    auto lines = readFileContents(filename);
+
+    // Parse the data
+    auto parsedData = parseData(lines);
+
+    // Display the data
+    displayTable(parsedData);
+}
+
+string ControlFlowClass::getCurrentWorkingDirectory() const 
+/*
+Function Name: getCurrentWorkingDirectory
+Function Purpose: This function is to get the current working directory
+*/
+{
+    char buffer[PATH_MAX];
+    #if defined(_WIN32) || defined(_WIN64)
+        if (GetCurrentDirectory(PATH_MAX, buffer)) {
+            return string(buffer);
+        }
+    #else
+        if (getcwd(buffer, sizeof(buffer)) != nullptr) {
+            return string(buffer);
+        }
+    #endif
+    // Handle error
+    return string();
 }
 
 void ControlFlowClass::Generate_CensusReport() 
@@ -472,12 +653,35 @@ Function Purpose: This function is to get the econmics information
     // Display the message
     ClearScreen();
 
+    // Create a single CensusData object
+    CensusData censusData;
 
-    // Get the inputs from the user
+    try {
+        // Delcare Local Variables
+        string fName = censusData.Get_CensusData_File();
 
+        // Get the cwd
+        string cwd = getCurrentWorkingDirectory();
 
-    // Get the input view input request from the user and display the entered data
-    Generate_CensusReport();
+        // Ensure there's a trailing slash (or backslash on Windows)
+        #if defined(_WIN32) || defined(_WIN64)
+            char separator = '\\';
+        #else
+            char separator = '/';
+        #endif
+        if (cwd.back() != separator) {
+            cwd += separator;
+        }
+
+        // Concatenate the file name with the cwd
+        string fullPath = cwd + fName;
+
+        // Use fullPath to display the data
+        displayCensusData(fullPath);
+        
+    } catch (const exception& e) {
+        cout << "Error: " << e.what() << endl;
+    }
 }
 
 void ControlFlowClass::ExitProgram() 

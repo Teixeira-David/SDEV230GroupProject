@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <limits>
 
 #include "Household.h"
 
@@ -9,12 +10,8 @@ using namespace std;
 
 //constructors
 //default constructor
-Household::Household(){
-    address = "N/A";
-    relationship = "N/A";
-    residence = "N/A";
-    ownership = "N/A";
-}
+Household::Household() 
+    : address(""), relationship(""), residence(""), ownership("") {}
 
 //constructor with parameters
 Household::Household(string add, string rel, string res, string own){
@@ -46,17 +43,6 @@ object to user.
 */
 {
     while (true) {
-        // Delcare Local Variables
-        int m_intMaxHouseholdCount = 0;
-
-        // Get the max Household count for the household
-        cout << "\n\nEnter the number of people in the household: ";
-        if (!(cin >> m_intMaxHouseholdCount) || m_intMaxHouseholdCount < 0) {
-            cin.clear(); 
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "Invalid input. Please enter a positive number.\n";
-            continue;
-        }
         // Create the null pointer
         Household** m_aHouseholds = nullptr;
         try {
@@ -66,7 +52,7 @@ object to user.
             // Allocate memory for the Household objects
             for (int i = 0; i < m_intMaxHouseholdCount; i++) {
                 m_aHouseholds[i] = new Household();
-                m_aHouseholds[i]->enterHouseholdDetails();
+                // m_aHouseholds[i]->enterHouseholdDetails();
             }
             // Return the array of pointers. This return object must be paired with the destroy function 
             return m_aHouseholds;
