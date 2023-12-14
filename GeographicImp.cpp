@@ -54,7 +54,6 @@ void geographicClass::set_Rurality() {
             cin.clear(); // Clear error flags
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
         }
-
     }
 }
 

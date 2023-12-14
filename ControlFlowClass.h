@@ -65,7 +65,6 @@ Class Purpose: This is the ControlFlowClass class
         void Generate_CensusReport();
         void ExitProgram();
 
-
         // Functions to print member information
         void displayTable(const vector<vector<string>>& data) const;
         void displayCensusData(const string& fileName) const;

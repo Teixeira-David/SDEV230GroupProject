@@ -106,7 +106,8 @@ void Household::setAddress(){
     string input = "";
 
     cout << "Enter household address: ";
-    cin >> input;
+    // cin >> input;
+    getline(cin, input); // Needs to get the full line, not just until the first white space
     address = input;
 }
 
@@ -114,7 +115,8 @@ void Household::setRelationship(){
     string input = "";
 
     cout << "Enter relationship of household owner: ";
-    cin >> input;
+    // cin >> input;
+    getline(cin, input); // Needs to get the full line, not just until the first white space
     relationship = input;
 }
 
@@ -122,7 +124,8 @@ void Household::setResidence(){
     string input = "";
 
     cout << "Enter residence type (Apartment, Condo or House): ";
-    cin >> input;
+    // cin >> input;
+    getline(cin, input); // Needs to get the full line, not just until the first white space
     residence = input;
 }
 
@@ -130,7 +133,8 @@ void Household::setOwnership(){
     string input = "";
 
     cout << "Enter owner of the household: ";
-    cin >> input;
+    // cin >> input;
+    getline(cin, input); // Needs to get the full line, not just until the first white space
     ownership = input;
 }
 

@@ -331,11 +331,11 @@ Function Purpose: This function is to set all the requirements for the census re
         // Check if the response is not yes
         if (response != 'y' && response != 'Y') {
             addMore = false;
-        }        
+        } else {
+            // Return to the main dashboard
+            Main_Dashboard();
+        }
     }
-
-    // Return to the main dashboard
-    Main_Dashboard();
 }
 
 void ControlFlowClass::Set_Persons_Info(CensusData& censusData) 
