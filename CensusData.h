@@ -12,6 +12,7 @@
 // Import the Preprocessor Directives
 #include <iostream>
 #include <string>
+#include <vector>
 #include "PersonClass.h"
 #include "Household.h"
 #include "Economics.h"
