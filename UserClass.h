@@ -15,6 +15,7 @@
 
 // Import header file for base class
 #include "PersonClass.h"
+#include "ControlFlowClass.h"
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -23,41 +24,36 @@ using namespace std;
 
 // Delcare Classes
 class UserClass : public PersonClass
-    /*
-    Class Name: UserClass
-    Class Purpose: This is the UserClass class
-    */
+/*
+Class Name: UserClass
+Class Purpose: This is the UserClass class
+*/
 {
-    // Delcare the public user functions
+// Delcare the public user functions
 public:
     // Create the default constructor
     UserClass();
 
     // Constructor with parameters
-    UserClass(string firstName, string lastName, string empID);
+    UserClass(string firstName, string lastName, string age, GenderType gender, MaritalType maritalStatus, 
+              EthnicityType ethnicity, string occupation, EducationType educateLevel, string empID);
 
     // Setter Functions
-    void setFirstName();
-    void setLastName();
-    void setEmpID();
+    void setEmpID(const string& initialEmpID);
+    void Set_AddNew_Employee(const string& initialEmpID);
     void enterUserDetails();
 
-
     // Getter Functions
-    string getFirstName() const;
-    string getLastName() const;
+    bool Get_EmpID_IfExists(const string& initialEmpID);
     string getEmpID() const;
 
     // Functions to print information
     void print() const;
-    void printName() const;
     void printEmpID() const;
 
     // Delcare the private class members 'm_' -> member var indicator
 private:
     // Set the members
-    string m_strFirstName;
-    string m_strLastName;
     string m_strEmpID;
 };
 
