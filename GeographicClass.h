@@ -21,6 +21,10 @@ using namespace std;
 // Geographic class
 class geographicClass {
     public: 
+        // Execution memory methods
+        geographicClass** allocGeographics();
+        void deallocGeographics(geographicClass** aGeographics, int intSize);
+
         //string state; // state, territory, embassy, or base
         //int rurality; // rural, Urban, or suburban
         
@@ -28,26 +32,38 @@ class geographicClass {
         geographicClass();
 
         // Constructor parameters
-        geographicClass(int rurality, string state);
+        geographicClass(int rurality, string state, string ruralityString);
 
         // setter
         void set_Rurality(); // Gets the Rural, Urban, or suburban / rurality
         void set_State(); // Gets the state/territory
         void menu_Swith_Control(); // Menu control
+        void enterGeographicDetails();
+        int getMaxGeographicCount() const;
 
         // getter
-        string get_State();
-        int get_Rurality();
+        string get_State() const;
+        int get_Rurality() const;
+        string get_Rurality_String() const;
 
         // print
         void print_State(); // This displays the state or territory
         void print_Rurality(); // This displays the Rurality]
         void display_Geo_Menu(); // Display menu
+        void print_Rurality_String();
+
+        // Format for file dump
+        string formatForFile() const;
 
     // Delcare the private class members    
     private:
+        // Store memory information
+        // geographicClass** m_aGeographics;
+        int m_intMaxGeographicCount = 1;
+
         // Set the members
         int intRurality;
+        string strRurality;
         string strState;
 };
 

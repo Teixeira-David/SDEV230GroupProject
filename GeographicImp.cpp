@@ -16,11 +16,11 @@ using namespace std;
 
 // Defualt Constructor
 geographicClass::geographicClass()
-    : intRurality(0), strState("") {}
+    : intRurality(0), strRurality(""), strState("") {}
 
 // Constructor with parameters
-geographicClass::geographicClass(int rurality, string state)
-    : intRurality(rurality), strState(state) {}
+geographicClass::geographicClass(int rurality, string ruralityString, string state)
+    : intRurality(rurality), strRurality(ruralityString), strState(state) {}
 
 // Enter Geo inputs function
 
@@ -37,24 +37,35 @@ void geographicClass::set_Rurality() {
         // Check if input is valid
         if (intInput == 1 || intInput == 2 || intInput == 3) {
             valid = true;
-            intRurality = intInput;
+            switch(intInput) { // Added this switch to make the int a string var after selection
+            case 1:
+                strRurality = "Rural"; break;
+            case 2:
+                strRurality = "Urban"; break;
+            case 3: 
+                strRurality = "Suburban"; break;
+            default:
+                strRurality = "No Rurality recorded";
+                break;
+            }
         } 
         else {
             cout << "\nError: Invalid input. Please enter 1, 2, or 3.";
             cin.clear(); // Clear error flags
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
         }
-
     }
-};
+}
 
+// Function to set the state
 void geographicClass::set_State() {
     string strInput;
     cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
     cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
     strState = strInput;
-};
+}
 
+// Function to for menu controls
 void geographicClass::menu_Swith_Control() {
     // Local Variables
     int intSelectionNum = 0;
@@ -98,23 +109,30 @@ void geographicClass::menu_Swith_Control() {
                 break;
             }
         }
-};
+}
 
 // getter functions
 
 // returns the variables function
-string geographicClass::get_State() {
+string geographicClass::get_State() const{
     string dState = strState;
     return dState;
-};
+}
 
 // returns the variables function
-int geographicClass::get_Rurality() {
+int geographicClass::get_Rurality() const{
     int dRurality = intRurality;
     return dRurality;
-};
+}
+
+// Method Purpose: Get the custom gender
+string geographicClass::get_Rurality_String() const 
+{
+    return strRurality;
+}
 
 // print functions
+// prints the state
 void geographicClass::print_State() {
     if (strState == "") {
         cout << "\nNo state recorded.";
@@ -122,8 +140,9 @@ void geographicClass::print_State() {
     else {
         cout << "\nState is: " << strState;
     }
-};
+}
 
+// Prints the rurality
 void geographicClass::print_Rurality() {
     string strOutput;
     switch(intRurality) { // gives the answer in string so user can tell what the rurality truly is
@@ -146,8 +165,18 @@ void geographicClass::print_Rurality() {
             cout << "\nNo Rurality recorded.";
             break;
     }
-};
+}
 
+// Prints out the rurality string
+void geographicClass::print_Rurality_String() {
+    if (strRurality == "") {
+        cout << "\nNo Rurality recorded.";
+    } else {
+        cout << "\nRurality is: " << strRurality;
+    }
+}
+
+// Function displays the Geo Menu
 void geographicClass::display_Geo_Menu() {
     cout << "\n\n---------------------------------------------------------------------------------------";
     cout << "\n\t\t\tPlease select from the menu options " << endl;
@@ -157,4 +186,93 @@ void geographicClass::display_Geo_Menu() {
     cout << "\n3.) Display House hold Rurality";
     cout << "\n4.) Display House hold state";
     cout << "\n9.) Exit program";
-};
+}
+
+void geographicClass::enterGeographicDetails() 
+/*
+Function Name: enterGeographicDetails
+Function Purpose: This function is to get all the inputs required for each Geographic
+*/
+{
+    // Call the existing setter methods for each attribute
+    set_Rurality();
+    set_State();
+}
+    
+geographicClass** geographicClass::allocGeographics() 
+/*
+Function Name: allocGeographics
+Function Purpose: This function is to allocate memory for each new Geographic entry and return the Geographic array 
+object to user.
+*/
+{
+    while (true) {
+        // Create the null pointer
+        geographicClass** m_aGeographics = nullptr;
+        try {
+            // Create the pointer array set to the maximum number of people in the Geographic
+            m_aGeographics = new geographicClass*[m_intMaxGeographicCount];
+
+            // Allocate memory for the Geographic objects
+            for (int i = 0; i < m_intMaxGeographicCount; i++) {
+                m_aGeographics[i] = new geographicClass();
+                // m_aGeographics[i]->enterGeographicDetails();
+            }
+            // Return the array of pointers. This return object must be paired with the destroy function 
+            return m_aGeographics;
+        } catch (const std::bad_alloc& e) {
+            // Handle memory allocation failure
+            cout << "Memory allocation failed: " << e.what() << endl;
+            // Deallocate memory allocated so far
+            for (int i = 0; i < m_intMaxGeographicCount; i++) {
+                delete m_aGeographics[i];
+            }
+            delete[] m_aGeographics;
+            return nullptr;
+        } catch (const std::exception& e) {
+            // Handle other exceptions
+            cout << "An error occurred: " << e.what() << endl;
+            // Deallocate memory allocated so far
+            for (int i = 0; i < m_intMaxGeographicCount; i++) {
+                delete m_aGeographics[i];
+            }
+            delete[] m_aGeographics;
+            return nullptr;
+        }
+    }
+}
+
+void geographicClass::deallocGeographics(geographicClass** aGeographics, int intSize) 
+/*
+Function Name: deallocGeographics
+Function Purpose: This function is to de-allocate memory for each new Geographic entry and return the Geographic array 
+object to user.
+*/
+{
+    if (aGeographics != nullptr) {
+        for (int i = 0; i < intSize; i++) {
+            delete aGeographics[i];
+        }
+        delete[] aGeographics;
+    }
+}
+
+// Method Purpose: Get the member
+int geographicClass::getMaxGeographicCount() const 
+{
+    return m_intMaxGeographicCount;
+}
+
+// Method to format for file
+string geographicClass::formatForFile() const 
+{
+    // Declare Local Variables
+    stringstream ss;
+
+    // Concatenate member variables into a string
+    ss << get_State() << ", "
+       << get_Rurality_String();
+
+    // Return the concatenated string
+    return ss.str();   
+}
