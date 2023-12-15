@@ -1,3 +1,7 @@
+// Author: Nicholas Moffitt
+// Project: CensusHub Group Final Project
+// Course: SDEV-230
+
 // Economics.h
 
 #ifndef Economics_H
@@ -7,7 +11,9 @@
 #include <fstream>
 #include <string>
 
+// Declare Classes
 class Economics {
+// Declare public user functions
 public:
     // Function to get the user's gross income
     void setGrossIncome();
@@ -21,6 +27,7 @@ public:
     //Function to save user information to a text file
     void saveToFile(const std::string& filename) const;
 
+// Declare private Class
 private:
     double grossIncome;
     std::string employmentStatus;
