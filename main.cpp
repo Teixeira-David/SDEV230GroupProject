@@ -28,10 +28,8 @@ Function Purpose: This is the main function where the program starts
     try {
         
         ControlFlowClass controlFlow; // Create an instance of ControlFlowClass
-
+        controlFlow.ClearScreen(); // Clear the screen
         controlFlow.LoginMenu(); // Start the application with the login menu
-
-        // Main_Dashboard is called at the end of LoginMenu function as per your implementation
 
         return 0; // End of the program
 

@@ -39,8 +39,6 @@ using namespace std;
 // Class method implementations 
 // Defualt Constructor
 ControlFlowClass::ControlFlowClass() {
-         ClearScreen();
-         DisplayStartUpMsg();
          m_aCensusData = vector<CensusData>();
 }
 
@@ -248,8 +246,8 @@ Function Purpose: This function is to display the and get the user login authori
 
             // Get the choice
             switch (choice) {
-                case 1:
-                case 2: newUser.setEmpID(strInput); break;
+                case 1: newUser.setEmpID(strInput); break;
+                case 2: newUser.enterUserDetails(); break;
                 case 3: ExitProgram(); break; 
                 default: 
                     throw runtime_error("Invalid selection.");
@@ -274,7 +272,7 @@ Function Name: Main_Dashboard
 Function Purpose: This function is to display the menu options for the dashboard
 */
 {
-
+    // Loop through the menu options
     while (true) {
         try {
             // Delcare Local Variables
@@ -321,6 +319,7 @@ Function Purpose: This function is to set all the requirements for the census re
     // Declare Local Variables
     bool addMore = true;
 
+    // Loop throught the gathering of census data
     while (addMore) {
         // Clear out any existing data
         m_aCensusData.clear();
@@ -502,7 +501,7 @@ Function Purpose: This function is format the data with no trailing whitespace a
             ss << "\n";
         }
     }
-
+    // Return the formatted string
     return ss.str();
 }
 
@@ -523,6 +522,7 @@ Function Purpose: This function is dumps data to file.
     string formattedData = FormatCensusDataForFile();
     fileStream << formattedData;
 
+    // Close the file
     fileStream.close();
 }
 
@@ -557,7 +557,7 @@ Function Purpose: This function reads the data from the file
         // Add the parsed line (household) to the parsedData
         parsedData.push_back(household);
     }
-
+    // Return the parsed data
     return parsedData;
 }
 
@@ -650,11 +650,7 @@ Function Purpose: This function displays the data
 */
 {
     // Declare Local Variables
-    // auto lines = readFileContents(filename);
     auto data = readFileContents(filename);
-
-    // Parse the data
-    // auto parsedData = parseData(lines);
 
     // Display the data;
     displayTable(data);  
@@ -689,7 +685,7 @@ Function Purpose: This function is to get the current working directory
 
 void ControlFlowClass::Generate_CensusReport() 
 /*
-Function Name: generateCensusReport
+Function Name: Generate_CensusReport
 Function Purpose: This function is to get the econmics information
 */
 {

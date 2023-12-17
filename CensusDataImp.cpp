@@ -73,8 +73,8 @@ string CensusData::formatForFile() const
 
     // Remove the trailing comma and space if persons data is not empty
     if (!m_aPersonsData.empty()) {
-        ss.seekp(-2, ios_base::end); // Go back two characters
-        ss << ' '; // Replace the last comma with a space
+        ss.seekp(-2, ios_base::end);
+        ss << ' '; 
     }
     
     // Format household data

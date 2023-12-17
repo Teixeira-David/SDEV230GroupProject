@@ -34,7 +34,7 @@ void geographicClass::set_Rurality() {
         cout << "\nEnter 1 for Rural, 2 for Urban, 3 for Suburban: ";
         cin >> intInput;
 
-        // Check if input is valid
+        // Check if input is valid // (Author: David Teixeira)
         if (intInput == 1 || intInput == 2 || intInput == 3) {
             valid = true;
             switch(intInput) { // Added this switch to make the int a string var after selection
@@ -58,11 +58,33 @@ void geographicClass::set_Rurality() {
 }
 
 void geographicClass::set_State() {
+    // string strInput;
+    // cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
+    // cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
+    // strState = strInput;
     string strInput;
-    cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
-    cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
-    strState = strInput;
-}
+
+    while (true) {
+        cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside: ";
+        if (!(cin >> strInput)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error reading input. Please try again.\n";
+            continue;
+        }
+
+        // Check if input contains any digits
+        if (any_of(strInput.begin(), strInput.end(), ::isdigit)) {
+            cout << "State name should not contain numbers. Please try again.\n";
+            continue;
+        }
+
+        // If input is valid, set it and break the loop
+        strState = strInput;
+        break;
+    }
+}    
+
 
 void geographicClass::menu_Swith_Control() {
     // Local Variables
@@ -198,6 +220,7 @@ geographicClass** geographicClass::allocGeographics()
 Function Name: allocGeographics
 Function Purpose: This function is to allocate memory for each new Geographic entry and return the Geographic array 
 object to user.
+(Author: David Teixeira)
 */
 {
     while (true) {
@@ -241,6 +264,7 @@ void geographicClass::deallocGeographics(geographicClass** aGeographics, int int
 Function Name: deallocGeographics
 Function Purpose: This function is to de-allocate memory for each new Geographic entry and return the Geographic array 
 object to user.
+(Author: David Teixeira)
 */
 {
     if (aGeographics != nullptr) {
@@ -251,13 +275,13 @@ object to user.
     }
 }
 
-// Method Purpose: Get the member
+// Method Purpose: Get the member (Author: David Teixeira)
 int geographicClass::getMaxGeographicCount() const 
 {
     return m_intMaxGeographicCount;
 }
 
-// Method to format for file
+// Method to format for file (Author: David Teixeira)
 string geographicClass::formatForFile() const 
 {
     // Declare Local Variables

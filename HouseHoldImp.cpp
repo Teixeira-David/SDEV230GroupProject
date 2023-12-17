@@ -1,3 +1,9 @@
+// ----------------------------------------------------------------
+// Author: Wyatt Kessie 
+// Project: Group Final Project
+// Course: SDEV-230
+// ----------------------------------------------------------------
+
 //Implementation file for class Household.h
 #include <iostream>
 #include <string>

@@ -41,10 +41,54 @@ Function Purpose: This function is to get all the inputs required for the user
 */
 {
     // Declare Local Variables
+    string strInput = "";
+
+    // Clear the screen and display the startup message
+    ControlFlowClass controlFlowInst;
+    controlFlowInst.ClearScreen();
+    controlFlowInst.DisplayStartUpMsg();
+    string fEmpDataFile = controlFlowInst.Get_EmployeeData_File();
+
+    // Declare Local Variables
     string strTmpString = "";
 
-    PersonClass::enterPersonDetails();
-    setEmpID(strTmpString);
+    // Get the user's first, last name, and employee ID
+    PersonClass::setFirstName();
+    PersonClass::setLastName();
+    
+    // Get the user's employee ID
+    while (true) {
+        cout << "\n\nPlease enter the employee ID: ";
+        if (!(cin >> strInput)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error reading input. Please try again.\n";
+            continue;
+        }
+
+        if (strInput.empty()) {
+            cout << "Employee ID cannot be empty. Please try again.\n";
+            continue;
+        }
+
+        if (!(Get_EmpID_IfExists(strInput))) {
+            cout << "Creating new user. Proceeding to dashboard...\n";
+            // Open the file for writing
+            ofstream outfile(fEmpDataFile, ios::app);
+            if (!outfile.is_open()) {
+                throw runtime_error("Error opening file for writing: " + fEmpDataFile);
+            }
+
+            // Format and write the new user's information to the file
+            outfile << strInput << ", " << PersonClass::getFirstName() << ", " << PersonClass::getLastName() << ",\n";
+            outfile.close();
+            cout << "New employee added successfully.\n";
+            break;
+        } else {
+            cout << "Employee ID already exist. Please try again.\n";
+            continue;
+        }
+    }
 }
 
 void UserClass::setEmpID(const string& initialEmpID = "")
@@ -56,45 +100,33 @@ Function Purpose: This function is to get the employee ID of the user
     // Delcare Local Variables
     string strInput = initialEmpID;
     
+    // Check if the user's employee ID is already set
+    if (!strInput.empty() && Get_EmpID_IfExists(strInput)) {
+        cout << "Login successful. Proceeding to dashboard...\n";
+        return;
+    }
+
     // Get the user's employee ID
     while (true) {
-        if (strInput.empty()) {
-            cout << "\n\nPlease enter the employee ID: ";
-            if (!(cin >> strInput)) {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "Error reading input. Please try again.\n";
-                continue;
-            }
-        }
-
-        // Validate the user's employee ID
-        try {
-            if (strInput.empty()) {
-                throw runtime_error("Employee ID cannot be empty.");
-            }
-            
-            if (Get_EmpID_IfExists(strInput)) {
-                cout << "Login successful. Proceeding to dashboard...\n";
-                // Code to proceed to the dashboard goes here
-                break;
-            } else {
-                cout << "This Employee ID does not exist. Would you like to create a new Employee ID? (y/n): ";
-                char response;
-                cin >> response;
-                if (response == 'y' || response == 'Y') {
-                    Set_AddNew_Employee(strInput); // This function should ensure no duplicate ID is created
-                    break;
-                } else {
-                    strInput.clear(); 
-                }
-            }
-        }
-        catch (const runtime_error& e) {
-            cout << "Error: " << e.what() << "\n";
+        cout << "\n\nPlease enter the employee ID: ";
+        if (!(cin >> strInput)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            strInput.clear(); // Reset strInput for new input
+            cout << "Error reading input. Please try again.\n";
+            continue;
+        }
+
+        if (strInput.empty()) {
+            cout << "Employee ID cannot be empty. Please try again.\n";
+            continue;
+        }
+
+        if (Get_EmpID_IfExists(strInput)) {
+            cout << "Login successful. Proceeding to dashboard...\n";
+            break;
+        } else {
+            cout << "Employee ID does not exist. Please try again.\n";
+            continue;
         }
     }
 }
@@ -124,19 +156,24 @@ bool canOpenFileForRead(const string& filePath) {
     return file.is_open();
 }
 
+// Function to check if a file can be opened for writing
 bool UserClass::Get_EmpID_IfExists(const string& initialEmpID) 
 {
+    // Try to open the file for reading
     try {
         ControlFlowClass controlFlowInst;
         string fEmpDataFile = controlFlowInst.Get_EmployeeData_File();
         
+        // Check if the file exists and can be opened for reading
         if (!canOpenFileForRead(fEmpDataFile)) {
             throw runtime_error("File does not exist or cannot be opened: " + fEmpDataFile);
         }
         
+        // Open the file for reading
         ifstream file(fEmpDataFile);
         string line, employeeID, firstName, lastName;
 
+        // Read the file line by line and check if the input employee ID exists
         while (getline(file, line)) {
             istringstream iss(line);
             if (iss >> employeeID >> firstName >> lastName) {
@@ -165,11 +202,14 @@ Function Author: David Teixeira
     // This function should ensure no duplicate ID is created
     try {
         ControlFlowClass controlFlowInst;
+        controlFlowInst.ClearScreen();
+        controlFlowInst.DisplayStartUpMsg();
         string fEmpDataFile = controlFlowInst.Get_EmployeeData_File();
 
-        // Check if the file exists and can be opened for reading
-        if (!canOpenFileForRead(fEmpDataFile)) {
-            throw runtime_error("File does not exist or cannot be opened: " + fEmpDataFile);
+        // Check for duplicate ID
+        if (Get_EmpID_IfExists(initialEmpID)) {
+            cout << "Employee ID already exists. Please try a different ID.\n";
+            return;
         }
 
         // Open the file for writing
@@ -178,15 +218,14 @@ Function Author: David Teixeira
             throw runtime_error("Error opening file for writing: " + fEmpDataFile);
         }
 
-        // Get the user's first and last name
         UserClass newUser;
         newUser.setEmpID(initialEmpID);
-        newUser.setFirstName(); // Ensure these methods are handling user input
-        newUser.setLastName();
+        newUser.enterUserDetails(); 
 
-        // Write the new user's information to the file
-        outfile << initialEmpID << " " << newUser.getFirstName() << " " << newUser.getLastName() << endl;
+        // Format and write the new user's information to the file
+        outfile << newUser.getEmpID() << ", " << newUser.getFirstName() << ", " << newUser.getLastName() << ",\n";
         outfile.close();
+        cout << "New employee added successfully.\n";
     } catch (const exception& e) {
         cout << "An error occurred: " << e.what() << endl;
     }

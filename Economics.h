@@ -1,3 +1,9 @@
+// ----------------------------------------------------------------
+// Author: Nick Moffitt
+// Project: Group Final Project
+// Course: SDEV-230
+// ----------------------------------------------------------------
+
 // Economics.h
 
 #ifndef Economics_H
@@ -7,18 +13,18 @@
 #include <fstream>
 #include <string>
 
-// Place the enumeration class for household classification
+// Place the enumeration class for household classification 
 // add to make sure we have options for relationships to owner
 enum class EmploymentType{FULL_TIME, PART_TIME, UNEMPLOYED, SELF_EMPLOYED, SEASONAL, 
                 TEMP, CONTRACTOR, FMLA, OTHER}; 
 
 class Economics {
 public:
-    // Constructors
+    // Constructors 
     Economics();
     Economics(double grossIncome, EmploymentType employmentStatus);
 
-    // Execution memory methods
+    // Execution memory methods 
     Economics** allocEconomics();
     void deallocEconomics(Economics** aEconomics, int intSize);
 
@@ -38,7 +44,7 @@ public:
     void saveToFile(const std::string& filename) const;
 
     // Getters 
-    int getMaxEconomicCount() const;
+    int getMaxEconomicCount() const; // 
     double getGrossIncome() const;
     std::string getEmploymentStatus() const;
 
@@ -50,7 +56,7 @@ public:
 
 private:
     // Store memory information
-    // Economics** m_aEconomics;
+    // Economics** m_aEconomics; 
     int m_intMaxEconomicCount = 1;
 
     double grossIncome;
@@ -63,7 +69,7 @@ private:
     double getNumericInput(const std::string& prompt);
     // double getNumericInput(const std::string& prompt) const;
 
-    // Enumeration Types
+    // Enumeration Types 
     EmploymentType m_eEmploymentType;
 };
 

@@ -150,11 +150,17 @@ Function Purpose: This function is to gets the first name of the person
         string strInput = "";
 
         // Get the user input
-        cout << "\n\nPlease enter the first name of household member: ";
+        cout << "\n\nPlease enter the first name: ";
         if (!(cin >> strInput)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Error reading input. Please try again. \n";
+            continue;
+        }
+
+        // Check if input contains any digits
+        if (any_of(strInput.begin(), strInput.end(), ::isdigit)) {
+            cout << "Input should not contain numbers. Please try again.\n";
             continue;
         }
 
@@ -173,7 +179,7 @@ Function Purpose: This function is to gets the first name of the person
             cout << "Error: " << e.what() << "\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "\n\nPlease enter the first name of household member: ";
+            cout << "\n\nPlease enter the first name: ";
         }
     }
 }
@@ -189,11 +195,17 @@ Function Purpose: This function is to gets the last name of the person
         string strInput = "";
 
         // Get the user input
-        cout << "\n\nPlease enter the last name of household member: ";
+        cout << "\n\nPlease enter the last name: ";
         if (!(cin >> strInput)) {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Error reading input. Please try again. \n";
+            continue;
+        }
+
+        // Check if input contains any digits
+        if (any_of(strInput.begin(), strInput.end(), ::isdigit)) {
+            cout << "Input should not contain numbers. Please try again.\n";
             continue;
         }
 
@@ -212,7 +224,7 @@ Function Purpose: This function is to gets the last name of the person
             cout << "Error: " << e.what() << "\n";
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "\n\nPlease enter the last name of household member: ";
+            cout << "\n\nPlease enter the last name: ";
         }
     }
 }
@@ -409,6 +421,12 @@ Function Purpose: This function is to gets the occupation of the person
         // Get the user input
         cout << "\n\nPlease enter the occupation of household member: ";
         getline(cin, strInput);  // Using getline to read the whole line
+
+        // Check if input contains any digits
+        if (any_of(strInput.begin(), strInput.end(), ::isdigit)) {
+            cout << "Input should not contain numbers. Please try again.\n";
+            continue;
+        }
 
         try {
             // Check if the input is empty

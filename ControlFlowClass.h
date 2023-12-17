@@ -19,10 +19,6 @@
 // Provide scope to identifiers inside the standard library
 using namespace std;
 
-// Create the constants
-
-// Place the enumeration class for ControlFlow classification
-
 // Delcare Classes
 class ControlFlowClass
 /*
@@ -50,9 +46,6 @@ Class Purpose: This is the ControlFlowClass class
         string Get_EmployeeData_File() const;
         string getCurrentWorkingDirectory() const;
         
-        // Bool methods
-        // bool checkEducationLevel(const vector<string>& data, const vector<string>& educationLevels) const;
-
         // Display methods 
         void ClearScreen();
         void DisplayStartUpMsg();
@@ -86,9 +79,6 @@ Class Purpose: This is the ControlFlowClass class
         
         // Set the members
         string m_fEmployeeDataFile = "employee.txt";
-
-        // Enumeration Types
-
 };
 
 #endif

@@ -1,3 +1,9 @@
+// ----------------------------------------------------------------
+// Author: Nick Moffitt
+// Project: Group Final Project
+// Course: SDEV-230
+// ----------------------------------------------------------------
+
 // Economics.cpp
 
 #include "Economics.h"
@@ -9,12 +15,12 @@
 #include <sstream>
 
 // Class method implementations 
-// Defualt Constructor
+// Defualt Constructor (Co-edit: David Teixeira)
 Economics::Economics() 
     : grossIncome(0.0),
       m_eEmploymentType(EmploymentType::OTHER) {}
 
-// Constructor with parameters
+// Constructor with parameters (Co-edit: David Teixeira)
 Economics::Economics(double grossIncome, EmploymentType employmentStatus)
     : grossIncome(grossIncome),
       m_eEmploymentType(employmentStatus) {}
@@ -26,7 +32,7 @@ void Economics::setGrossIncome() {
 // void Economics::setEmploymentStatus() {
 //     std::cout << "Enter your employment status (e.g., Full-time, Part-time, unemployed, self-employed): ";
 //     std::getline(std::cin, employmentStatus);
-// }
+// } Commented this out because it was replaced by the function below - (Co-edit: David Teixeira)
 
 void Economics::displayEconomics() const {
     std::cout << "Gross Income: $" << grossIncome << std::endl;
@@ -68,7 +74,7 @@ double Economics::getNumericInput(const std::string& prompt) {
 //     }
 //     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the buffer
 //     return value;
-// }
+// } Commented this out because it was replaced by the function below - (Co-edit: David Teixeira)
 
 // Method Purpose: Get the gross income
 double Economics::getGrossIncome() const 
@@ -86,6 +92,7 @@ void Economics::enterEconomicsDetails()
 /*
 Function Name: enterEconomicsDetails
 Function Purpose: This function is to get all the inputs required for each Economics
+(Author: David Teixeira)
 */
 {
     // Call the existing setter methods for each attribute
@@ -101,6 +108,7 @@ Economics** Economics::allocEconomics()
 Function Name: allocEconomics
 Function Purpose: This function is to allocate memory for each new Economics entry and return the Economics array 
 object to user.
+(Author: David Teixeira)
 */
 {
     while (true) {
@@ -144,6 +152,7 @@ void Economics::deallocEconomics(Economics** aEconomics, int intSize)
 Function Name: deallocEconomics
 Function Purpose: This function is to de-allocate memory for each new Economics entry and return the Economics array 
 object to user.
+(Author: David Teixeira)
 */
 {
     if (aEconomics != nullptr) {
@@ -154,13 +163,13 @@ object to user.
     }
 }
 
-// Method Purpose: Get the member
+// Method Purpose: Get the member (Author: David Teixeira)
 int Economics::getMaxEconomicCount() const 
 {
     return m_intMaxEconomicCount;
 }
 
-// Method to format for file
+// Method to format for file (Author: David Teixeira)
 std::string Economics::formatForFile() const 
 {
     // Declare Local Variables
@@ -178,6 +187,7 @@ void Economics::setEmploymentStatus() {
 /*
 Function Name: setEmploymentStatus
 Function Purpose: This function is to sets the employment status
+(Author: David Teixeira)
 */    
     while (true) {
         try {

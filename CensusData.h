@@ -57,8 +57,6 @@ Class Purpose: This is the CensusData class
         // Execution memory methods
         const vector<PersonClass>& getPersonsData() const;
 
-        // Functions to print member information
-
         // Format for file dump
         string formatForFile() const;
 
@@ -74,9 +72,6 @@ Class Purpose: This is the CensusData class
         Household household;
         Economics economic;
         geographicClass geographic;
-
-        // Enumeration Types
-
 };
 
 #endif

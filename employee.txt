@@ -7,4 +7,5 @@
 1007, Yoda, Jedi-Master,
 1008, Padme, Amidala,
 1009, Mace, Windu,
-1010, Boba, Fett
+1010, Boba, Fett,
+123dfg, Foo, Bar,
