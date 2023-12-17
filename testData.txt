@@ -1,0 +1,90 @@
+Test Set 1
+------------------------------------  
+Head of Household -> Name: John Doe
+                    Age: 35
+                    Gender: Male
+                    Marital Status: Married
+                    Ethnicity: Caucasian
+                    Occupation: Software Engineer
+                    Education Level: Bachelor's
+                    Address: 123 Main St
+                    Ownership Status: Owner
+                    Gross Income: $80,000
+                    Employment Status: Employed
+                    Geographic Location: Urban
+
+Member of Household -> Name: Jane Doe
+                        Age: 32
+                        Gender: Female
+                        Marital Status: Married
+                        Ethnicity: Caucasian
+                        Occupation: Teacher
+                        Education Level: Master's
+
+Member of Household -> Name: Tom Doe
+                        Age: 10
+                        Gender: Male
+                        Marital Status: Single
+                        Ethnicity: Caucasian
+                        Occupation: Student
+                        Education Level: High School
+
+Test Set 2
+------------------------------------  
+Head of Household -> Name: Alice Smith
+                    Age: 45
+                    Gender: Female
+                    Marital Status: Widowed
+                    Ethnicity: African American
+                    Occupation: Nurse
+                    Education Level: Master's
+                    Address: 456 Elm St
+                    Ownership Status: Renter
+                    Gross Income: $60,000
+                    Employment Status: Employed
+                    Geographic Location: Suburban
+
+Member of Household -> Name: Sarah Smith
+                        Age: 19
+                        Gender: Female
+                        Marital Status: Single
+                        Ethnicity: African American
+                        Occupation: Student
+                        Education Level: High School
+
+
+Test Set 3
+------------------------------------  
+Head of Household -> Name: Eleanor Johnson
+                    Age: 28
+                    Gender: Female
+                    Marital Status: Single
+                    Ethnicity: Hispanic
+                    Occupation: Accountant
+                    Education Level: Bachelor's
+                    Address: 789 Oak St
+                    Ownership Status: Owner
+                    Gross Income: $70,000
+                    Employment Status: Employed
+                    Geographic Location: Urban
+
+
+Test Set 4
+------------------------------------  
+New User -> First Name: Foo 
+            Last Name: Bar
+            EmployeeID: 123dfg
+
+
+Test Set 5
+------------------------------------  
+New User -> First Name: Darth 
+            Last Name: Sidious
+            EmployeeID: 0987
+
+
+Test Set 6
+------------------------------------  
+New User -> First Name: Jar Jar 
+            Last Name: Binks
+            EmployeeID: 345ert

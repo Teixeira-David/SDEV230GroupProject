@@ -323,7 +323,7 @@ Function Purpose: This function is to sets the gender of the person.
                 case 6: 
                     m_eGenderType = GenderType::OTHER;
                     cout << "Enter custom gender: ";                    
-                    cin >> ws; // Consume any leading whitespace
+                    cin >> ws;
                     getline(cin, m_strCustomGender);
                     if (m_strCustomGender.empty()) {
                         throw runtime_error("Custom gender cannot be empty.");
@@ -420,7 +420,7 @@ Function Purpose: This function is to gets the occupation of the person
 
         // Get the user input
         cout << "\n\nPlease enter the occupation of household member: ";
-        getline(cin, strInput);  // Using getline to read the whole line
+        getline(cin, strInput);
 
         // Check if input contains any digits
         if (any_of(strInput.begin(), strInput.end(), ::isdigit)) {
@@ -450,8 +450,8 @@ Function Purpose: This function is to gets the occupation of the person
 
 void PersonClass::setEthnicity() 
 /*
-Function Name: setGender
-Function Purpose: This function is to sets the gender of the person.
+Function Name: setEthnicity
+Function Purpose: This function is to sets the ethnicity of the person.
 */
 {
     while (true) {
@@ -489,7 +489,7 @@ Function Purpose: This function is to sets the gender of the person.
                 case 7: 
                     m_eEthnicityType = EthnicityType::OTHER;
                     cout << "Enter custom ethnicity: ";
-                    cin >> ws; // Consume any leading whitespace
+                    cin >> ws;
                     getline(cin, m_strCustomEthnicity); 
                     if (m_strCustomEthnicity.empty()) {
                         throw runtime_error("Custom ethnicity cannot be empty.");
@@ -556,7 +556,7 @@ Function Purpose: This function is to sets the education level of the person.
                 case 11: 
                     m_eEducationLevelType = EducationType::OTHER;
                     cout << "Enter custom education level: ";
-                    cin >> ws; // Consume any leading whitespace
+                    cin >> ws;
                     getline(cin, m_strCustomEducationLevel); 
                     if (m_strCustomEducationLevel.empty()) {
                         throw runtime_error("Custom education level cannot be empty.");

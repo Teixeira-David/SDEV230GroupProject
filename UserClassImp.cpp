@@ -38,6 +38,7 @@ void UserClass::enterUserDetails()
 /*
 Function Name: enterUserDetails
 Function Purpose: This function is to get all the inputs required for the user
+(Author: David Teixeira)
 */
 {
     // Declare Local Variables
@@ -95,6 +96,7 @@ void UserClass::setEmpID(const string& initialEmpID = "")
 /*
 Function Name: setEmpID
 Function Purpose: This function is to get the employee ID of the user
+(Author: David Teixeira)
 */
 {
     // Delcare Local Variables
@@ -132,6 +134,7 @@ Function Purpose: This function is to get the employee ID of the user
 }
 
 string getCurrentWorkingDirectory() {
+// (Author: David Teixeira)
     char buff[FILENAME_MAX];
     #ifdef _WIN32
     _getcwd(buff, FILENAME_MAX);
@@ -143,7 +146,7 @@ string getCurrentWorkingDirectory() {
 }
 
 // Function to remove unwanted characters (like commas) from a string
-void trimSpecialCharacters(string& str) {
+void trimSpecialCharacters(string& str) { // (Author: David Teixeira)
     // Remove trailing special characters (e.g., commas)
     str.erase(std::remove_if(str.begin(), str.end(), [](unsigned char c) { 
         return !std::isalnum(c); // Remove if not alphanumeric
@@ -151,13 +154,14 @@ void trimSpecialCharacters(string& str) {
 }
 
 // Function to check if a file can be opened for reading
-bool canOpenFileForRead(const string& filePath) {
+bool canOpenFileForRead(const string& filePath) { // (Author: David Teixeira)
     ifstream file(filePath);
     return file.is_open();
 }
 
 // Function to check if a file can be opened for writing
 bool UserClass::Get_EmpID_IfExists(const string& initialEmpID) 
+// (Author: David Teixeira)
 {
     // Try to open the file for reading
     try {
@@ -196,7 +200,7 @@ void UserClass::Set_AddNew_Employee(const string& initialEmpID)
 /*
 Function Name: Set_AddNew_Employee
 Function Purpose: This function is to add a new employee to the employee data file
-Function Author: David Teixeira
+(Author: David Teixeira)
 */
 {
     // This function should ensure no duplicate ID is created

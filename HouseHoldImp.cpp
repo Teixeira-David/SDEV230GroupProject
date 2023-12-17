@@ -20,7 +20,7 @@
 using namespace std;
 
 //constructors
-//default constructor
+//default constructor (Co-edit: David Teixeira)
 Household::Household() 
     : address(""), 
         relationship(""), 
@@ -30,7 +30,7 @@ Household::Household()
         m_eResidenceType(ResidenceType::OTHER),
         m_eOwnerType(OwnershipType::OTHER) {}
 
-//constructor with parameters
+//constructor with parameters (Co-edit: David Teixeira)
 Household::Household(string add, string rel, string res, string own, RelationshipType relationshipType,
     ResidenceType residenceType, OwnershipType ownershipType)
     : address(add), 
@@ -46,6 +46,7 @@ void Household::enterHouseholdDetails(const vector<PersonClass>& persons)
 /*
 Function Name: enterHouseholdDetails
 Function Purpose: This function is to get all the inputs required for each household
+(Author: David Teixeira)
 */
 {
     // Call the existing setter methods for each attribute
@@ -71,6 +72,7 @@ Household** Household::allocHouseholds()
 Function Name: allocHouseholds
 Function Purpose: This function is to allocate memory for each new household entry and return the Household array 
 object to user.
+(Author: David Teixeira)
 */
 {
     while (true) {
@@ -114,6 +116,7 @@ void Household::deallocHouseholds(Household** aHouseholds, int intSize)
 Function Name: deallocHouseholds
 Function Purpose: This function is to de-allocate memory for each new household entry and return the household array 
 object to user.
+(Author: David Teixeira)
 */
 {
     // Deallocate memory allocated so far
@@ -134,7 +137,7 @@ void Household::setHouseholdVars(string add, string rel, string res, string own)
     ownership = own;
 }
 
-void Household::setAddress(){
+void Household::setAddress(){ // (Co-Edit: David Teixeira)
     // string input = "";
 
     // cout << "Enter household address: ";
@@ -149,8 +152,15 @@ void Household::setAddress(){
 
         // Get the user input
         cout << "\n\nPlease enter the street address of the household: ";
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, strInput);
+
+        // Remove leading and trailing whitespace
+        strInput.erase(strInput.begin(), find_if(strInput.begin(), strInput.end(), [](char ch) {
+            return !isspace(ch);
+        }));
+        strInput.erase(find_if(strInput.rbegin(), strInput.rend(), [](char ch) {
+            return !isspace(ch);
+        }).base(), strInput.end());
 
         try {
             // Check if the input is empty
@@ -172,7 +182,7 @@ void Household::setAddress(){
     }
 }
 
-void Household::setRelationship(){
+void Household::setRelationship(){ // (Co-Edit: David Teixeira)
     // string input = "";
 
     // cout << "Enter relationship of household owner: ";
@@ -240,7 +250,7 @@ void Household::setRelationship(){
     }
 }
 
-void Household::setResidence(){
+void Household::setResidence(){ // (Co-Edit: David Teixeira)
     // string input = "";
     // cout << "Enter residence type (Apartment, Condo or House): ";
     // // cin >> input;
@@ -309,7 +319,7 @@ void Household::setResidence(){
     }
 }    
 
-void Household::setOwnership() {
+void Household::setOwnership() { // (Co-Edit: David Teixeira)
     // string input = "";
 
     // cout << "Enter owner of the household: ";
@@ -465,6 +475,7 @@ void Household::selectOwner(const vector<PersonClass>& persons)
 /*
 Function Name: selectOwner
 Function Purpose: This function gets the owner of the household from the user
+(Author: David Teixeira)
 */
 {
     // Check if the persons vector is empty
@@ -500,6 +511,7 @@ string Household::relationshipTypeToString() const
 /*
 Function Name: relationshipTypeToString
 Function Purpose: This function converts the enum type to string
+(Author: David Teixeira)
 */
 {
     switch (m_eRelationshipType) {
@@ -520,6 +532,7 @@ string Household::residenceTypeToString() const
 /*
 Function Name: residenceTypeToString
 Function Purpose: This function converts the enum type to string
+(Author: David Teixeira)
 */
 {
     switch (m_eResidenceType) {
@@ -541,6 +554,7 @@ string Household::ownerTypeToString() const
 /*
 Function Name: ownerTypeToString
 Function Purpose: This function converts the enum type to string
+(Author: David Teixeira)
 */
 {
     switch (m_eOwnerType) {

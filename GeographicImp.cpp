@@ -62,6 +62,7 @@ void geographicClass::set_State() {
     // cout << "\nPlease enter the state, territory, embassy, or U.S. base where you reside : ";
     // cin >> strInput; // with how open ended this is, there is no real plausible way to have validation
     // strState = strInput;
+    // (Author: David Teixeira)
     string strInput;
 
     while (true) {
@@ -163,7 +164,7 @@ void geographicClass::print_State() {
 
 void geographicClass::print_Rurality() {
     string strOutput;
-    switch(intRurality) { // gives the answer in string so user can tell what the rurality truly is
+    switch(intRurality) { // gives the answer in string so user can tell what the rurality truly is (Author: David Teixeira)
         case 1:
             strOutput = "Rural";
             cout << "\nRurality is: " << strOutput;

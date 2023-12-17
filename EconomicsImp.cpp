@@ -224,7 +224,7 @@ Function Purpose: This function is to sets the employment status
                 case 6: m_eEmploymentType = EmploymentType::TEMP; break;
                 case 7: m_eEmploymentType = EmploymentType::CONTRACTOR; break;
                 case 8: m_eEmploymentType = EmploymentType::FMLA; break;
-                case 11: 
+                case 9: 
                     m_eEmploymentType = EmploymentType::OTHER;
                     std::cout << "Enter custom employment type: ";
                     std::cin >> std::ws; // Consume any leading whitespace
