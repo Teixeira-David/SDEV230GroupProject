@@ -8,14 +8,25 @@
 #include <array>
 #include <sstream>
 
+// Class method implementations 
+// Defualt Constructor
+Economics::Economics() 
+    : grossIncome(0.0),
+      m_eEmploymentType(EmploymentType::OTHER) {}
+
+// Constructor with parameters
+Economics::Economics(double grossIncome, EmploymentType employmentStatus)
+    : grossIncome(grossIncome),
+      m_eEmploymentType(employmentStatus) {}
+
 void Economics::setGrossIncome() {
     grossIncome = getNumericInput("Enter your gross income: ");
 }
 
-void Economics::setEmploymentStatus() {
-    std::cout << "Enter your employment status (e.g., Full-time, Part-time, unemployed, self-employed): ";
-    std::getline(std::cin, employmentStatus);
-}
+// void Economics::setEmploymentStatus() {
+//     std::cout << "Enter your employment status (e.g., Full-time, Part-time, unemployed, self-employed): ";
+//     std::getline(std::cin, employmentStatus);
+// }
 
 void Economics::displayEconomics() const {
     std::cout << "Gross Income: $" << grossIncome << std::endl;
@@ -80,6 +91,9 @@ Function Purpose: This function is to get all the inputs required for each Econo
     // Call the existing setter methods for each attribute
     setGrossIncome();
     setEmploymentStatus();
+
+    // Set the employment status
+    employmentStatus = employmentTypeToString();
 }
     
 Economics** Economics::allocEconomics() 
@@ -154,8 +168,91 @@ std::string Economics::formatForFile() const
 
     // Concatenate member variables into a string
     ss << getGrossIncome() << ", "
-       << getEmploymentStatus();
+       << employmentTypeToString();
 
     // Return the concatenated string
     return ss.str();   
+}
+
+void Economics::setEmploymentStatus() {
+/*
+Function Name: setEmploymentStatus
+Function Purpose: This function is to sets the employment status
+*/    
+    while (true) {
+        try {
+            // Declare Local Variables
+            int choice;
+
+            // Display the choices
+            std::cout << "\n\nSelect the employment status:\n\n";
+            std::cout << "1. Full Time\n";
+            std::cout << "2. Part Time\n";
+            std::cout << "3. Unemployed\n";
+            std::cout << "4. Self Employed\n";
+            std::cout << "5. Seasonal\n";
+            std::cout << "6. Temporary\n";
+            std::cout << "7. Contractor\n";
+            std::cout << "8. Federal Medical Leave Assistance (FMLA)\n";
+            std::cout << "9. Other\n";
+            std::cout << "\n\nEnter your choice: ";
+            
+            // Get the input choice
+            std::cin >> choice;            
+            if (std::cin.fail() || choice < 1 || choice > 9) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw std::runtime_error("Invalid selection. Please enter a number between 1 and 9.");
+            }
+
+            switch (choice) {
+                case 1: m_eEmploymentType = EmploymentType::FULL_TIME; break;
+                case 2: m_eEmploymentType = EmploymentType::PART_TIME; break;
+                case 3: m_eEmploymentType = EmploymentType::UNEMPLOYED; break;
+                case 4: m_eEmploymentType = EmploymentType::SELF_EMPLOYED; break;
+                case 5: m_eEmploymentType = EmploymentType::SEASONAL; break;
+                case 6: m_eEmploymentType = EmploymentType::TEMP; break;
+                case 7: m_eEmploymentType = EmploymentType::CONTRACTOR; break;
+                case 8: m_eEmploymentType = EmploymentType::FMLA; break;
+                case 11: 
+                    m_eEmploymentType = EmploymentType::OTHER;
+                    std::cout << "Enter custom employment type: ";
+                    std::cin >> std::ws; // Consume any leading whitespace
+                    getline(std::cin, m_strCustomEmploymentType); 
+                    if (m_strCustomEmploymentType.empty()) {
+                        throw std::runtime_error("Custom employment type cannot be empty.");
+                    }
+                    break;
+                default:
+                    throw std::runtime_error("Invalid selection.");
+            }
+            break;
+
+        } catch (const std::runtime_error& e) {
+            std::cout << "Error: " << e.what() << "\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "\n\nPlease enter the custom employment type of household member: ";
+        }
+    }
+} 
+
+std::string Economics::employmentTypeToString() const 
+/*
+Function Name: employmentTypeToString
+Function Purpose: This function converts the enum type to string
+*/
+{
+    switch (m_eEmploymentType) {
+        case EmploymentType::FULL_TIME: return "Full Time";
+        case EmploymentType::PART_TIME: return "Part Time";
+        case EmploymentType::UNEMPLOYED: return "Unemployed";
+        case EmploymentType::SELF_EMPLOYED: return "Self Employed";
+        case EmploymentType::SEASONAL: return "Seasonal";
+        case EmploymentType::TEMP: return "Temporary";
+        case EmploymentType::CONTRACTOR: return "Contractor";
+        case EmploymentType::FMLA: return "Federal Medical Leave Assistance (FMLA)";
+        case EmploymentType::OTHER: return "Other: " + m_strCustomEmploymentType;
+        default: return "Unknown employment type";
+    }
 }

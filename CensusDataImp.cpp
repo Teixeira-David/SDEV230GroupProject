@@ -15,9 +15,11 @@
 #include <fstream>
 #include <sstream>
 #include <functional>
+#include <vector>
 
 // Include the headers for class definition
 #include "CensusData.h"
+
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -26,7 +28,8 @@ using namespace std;
 // Defualt Constructor
 
 // Constructor with PersonClass object
-CensusData::CensusData(const PersonClass& personData) : person(personData) {}
+// CensusData::CensusData(const PersonClass& personData) : person(personData) {}
+CensusData::CensusData(const vector<PersonClass>& personsData) : m_aPersonsData(personsData) {}
 
 // Constructor with Household object
 CensusData::CensusData(const Household& householdData) : household(householdData) {}
@@ -63,9 +66,17 @@ string CensusData::formatForFile() const
     // Declare Local Variables
     stringstream ss;
 
-    // Format person data
-    ss << person.formatForFile() << ", ";
+    // Format data for each person in m_aPersonsData
+    for (const auto& person : m_aPersonsData) {
+        ss << person.formatForFile() << ", ";
+    }
 
+    // Remove the trailing comma and space if persons data is not empty
+    if (!m_aPersonsData.empty()) {
+        ss.seekp(-2, ios_base::end); // Go back two characters
+        ss << ' '; // Replace the last comma with a space
+    }
+    
     // Format household data
     ss << household.formatForFile() << ", ";
 
@@ -88,4 +99,15 @@ vector<CensusData> CensusData::Get_Census_Data() const
 string CensusData::Get_CensusData_File() const
 {
     return m_fCensusDataFile;
+}
+
+// Method to add a person to the census data
+void CensusData::addPerson(const PersonClass& person) {
+    m_aPersonsData.push_back(person);
+}
+
+// Method to add a person to the census data
+const vector<PersonClass>& CensusData::getPersonsData() const
+{
+    return m_aPersonsData;
 }

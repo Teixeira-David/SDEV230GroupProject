@@ -7,8 +7,17 @@
 #include <fstream>
 #include <string>
 
+// Place the enumeration class for household classification
+// add to make sure we have options for relationships to owner
+enum class EmploymentType{FULL_TIME, PART_TIME, UNEMPLOYED, SELF_EMPLOYED, SEASONAL, 
+                TEMP, CONTRACTOR, FMLA, OTHER}; 
+
 class Economics {
 public:
+    // Constructors
+    Economics();
+    Economics(double grossIncome, EmploymentType employmentStatus);
+
     // Execution memory methods
     Economics** allocEconomics();
     void deallocEconomics(Economics** aEconomics, int intSize);
@@ -36,6 +45,9 @@ public:
     // Format for file dump
     std::string formatForFile() const;
 
+    // Enum to string
+    std::string employmentTypeToString() const;
+
 private:
     // Store memory information
     // Economics** m_aEconomics;
@@ -43,10 +55,16 @@ private:
 
     double grossIncome;
     std::string employmentStatus;
+
+    // Add the custom member 
+    std::string m_strCustomEmploymentType;
     
     // Helper function to validate numeric input
     double getNumericInput(const std::string& prompt);
     // double getNumericInput(const std::string& prompt) const;
+
+    // Enumeration Types
+    EmploymentType m_eEmploymentType;
 };
 
 #endif // Economics_H

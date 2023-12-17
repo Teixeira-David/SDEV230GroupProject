@@ -13,6 +13,8 @@
 #include <iostream>
 #include <string>
 #include "CensusData.h"
+#include "Household.h"
+#include "PersonClass.h"
 
 // Provide scope to identifiers inside the standard library
 using namespace std;
@@ -48,7 +50,8 @@ Class Purpose: This is the ControlFlowClass class
         string Get_EmployeeData_File() const;
         string getCurrentWorkingDirectory() const;
         
-        // Execution memory methods
+        // Bool methods
+        // bool checkEducationLevel(const vector<string>& data, const vector<string>& educationLevels) const;
 
         // Display methods 
         void ClearScreen();
@@ -64,6 +67,7 @@ Class Purpose: This is the ControlFlowClass class
         void Main_Dashboard();
         void Generate_CensusReport();
         void ExitProgram();
+        void DisplayCensusDataMsg() const;
 
         // Functions to print member information
         void displayTable(const vector<vector<string>>& data) const;
@@ -72,7 +76,7 @@ Class Purpose: This is the ControlFlowClass class
         // Format for file dump
         string FormatCensusDataForFile() const;
         void WriteCensusDataToFile(const string& fileName) const;
-        vector<string> readFileContents(const string& fileName) const;
+        vector<vector<string>> readFileContents(const string& fileName) const;
         vector<vector<string>> parseData(const vector<string>& lines) const;
 
     // Delcare the private class members 'm_' -> member var indicator

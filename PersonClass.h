@@ -21,8 +21,7 @@ using namespace std;
 // Place the enumeration class for person classification
 enum class GenderType{FEMALE, MALE, NON_BINARY, TRANSGENDER, GENDERQUEER, OTHER};
 enum class MaritalType{SINGLE, MARRIED, SEPARATED, DIVORCED, WIDOWED, CIVIL_PARTNERSHIP, OTHER};
-enum class EducationType{NO_SCHOOLING, SOME_PRIMARY_EDUCATION, PRIMARY_EDUCATION, SOME_SECONDARY_EDUCATION,
-                        SECONDARY_EDUCATION, VOCATIONAL_TRAINING, SOME_COLLEGE, COLLEGE_EDUCATION,
+enum class EducationType{NO_SCHOOLING, SOME_PRIMARY_EDUCATION, PRIMARY_EDUCATION, SOME_SECONDARY_EDUCATION,SECONDARY_EDUCATION, VOCATIONAL_TRAINING, SOME_COLLEGE, COLLEGE_EDUCATION,
                         POST_GRADUATE, ADVANCED_DEGREE, OTHER};
 enum class EthnicityType{CAUCASIAN, AFRICAN, LATINO, NATIVE_AMERICAN, PACIFIC_ISLANDER, MIXED_ETHNICITY, OTHER};
 
@@ -73,6 +72,7 @@ Class Purpose: This is the PersonClass class
         string getOccupation() const;
         string getEducation() const;
         int getMaxPersonCount() const;
+        string Get_First_Last_Name() const;
 
         // Enum to string
         string genderTypeToString() const;
@@ -102,6 +102,7 @@ Class Purpose: This is the PersonClass class
         // Set the members
         string m_strFirstName;
         string m_strLastName;
+        string m_strFullName;
         string m_strAgeRange;
         string m_strCustomGender;
         string m_strCustomMaritalStatus;

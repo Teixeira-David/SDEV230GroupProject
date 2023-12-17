@@ -51,7 +51,7 @@ Function Purpose: This function clears the command line
 */
 {
     // Check if the compiler is of win32 or other
-    #ifdef _WIND32 
+    #ifdef _WIN32 
         system("cls");
     #else
         system("clear");
@@ -195,6 +195,23 @@ void ControlFlowClass::Display_UserDemos_Msg()
     cout << "---------------------------------------------------------------------------------------\n\n";
 }
 
+void ControlFlowClass::DisplayCensusDataMsg() const
+{
+    cout << "\n---------------------------------------------------------------------------------------\n";
+    cout << "\n\t\t\tCensusHub - Census Data Overview\n";
+    cout << "---------------------------------------------------------------------------------------\n";
+    cout << "Below is the overview of the collected census data. The information is presented \n";
+    cout << "in a structured format to provide a clear and comprehensive view of the household demographics.\n\n";
+    cout << "Each household's data includes:\n";
+    cout << " - Household Owner Information: Name, Age, Gender, etc.\n";
+    cout << " - Address and Ownership Details\n";
+    cout << " - Details of Other Household Members\n";
+    cout << " - Employment and Geographic Information\n\n";
+    cout << "Please review the displayed data for accuracy and completeness.\n";
+    cout << "Use the provided options for further actions or queries.\n";
+    cout << "---------------------------------------------------------------------------------------\n";
+}
+
 string ControlFlowClass::Get_EmployeeData_File() const
 {
     return m_fEmployeeDataFile;
@@ -331,10 +348,9 @@ Function Purpose: This function is to set all the requirements for the census re
         // Check if the response is not yes
         if (response != 'y' && response != 'Y') {
             addMore = false;
-        } else {
-            // Return to the main dashboard
-            Main_Dashboard();
         }
+        // Return to the main dashboard
+        Main_Dashboard();
     }
 }
 
@@ -357,13 +373,8 @@ Function Purpose: This function is to get the persons information
         // Loop through each person and get their details
         for (int i = 0; i < personObj.getMaxPersonCount(); i++) {
             persons[i]->enterPersonDetails();
-
-          // Set the last person's data in censusData
-            if (i == personObj.getMaxPersonCount() - 1) {
-                censusData.setPerson(*persons[i]);
-            }
+            censusData.addPerson(*persons[i]);
         }
-
         // Deallocate memory when done
         personObj.deallocPersons(persons, personObj.getMaxPersonCount());
     }
@@ -384,11 +395,14 @@ Function Purpose: This function is to get the household information
     Household householdObj;
     Household** households = householdObj.allocHouseholds();
 
+    // Assuming you have a vector of PersonClass objects called m_aPersonsData in your CensusData class
+    const vector<PersonClass>& persons = censusData.getPersonsData(); 
+
     // Check if households is not null
     if (households != nullptr) {
         // Loop through each household and get their details
         for (int i = 0; i < householdObj.getMaxHouseholdCount(); i++) {
-            households[i]->enterHouseholdDetails();
+            households[i]->enterHouseholdDetails(persons);
 
           // Set the last person's data in censusData
             if (i == householdObj.getMaxHouseholdCount() - 1) {
@@ -512,29 +526,39 @@ Function Purpose: This function is dumps data to file.
     fileStream.close();
 }
 
-vector<string> ControlFlowClass::readFileContents(const string& filename) const
+vector<vector<string>> ControlFlowClass::readFileContents(const string& filename) const
 /*
 Function Name: readFileContents
 Function Purpose: This function reads the data from the file
 */
 {
     // Declare Local Variables
-    vector<string> lines;
+    vector<vector<string>> parsedData;
     ifstream fileStream(filename);
 
     // Check if the file is open
     if (!fileStream) {
         cerr << "Error opening file: " << filename << endl;
-        return lines;
+        return parsedData;
     }
 
-    // Read the file contents
+    // Read and parse each line of the file
     string line;
     while (getline(fileStream, line)) {
-        lines.push_back(line);
+        stringstream ss(line);
+        vector<string> household;
+        string item;
+
+        // Parse the line by comma
+        while (getline(ss, item, ',')) {
+            household.push_back(item);
+        }
+        
+        // Add the parsed line (household) to the parsedData
+        parsedData.push_back(household);
     }
 
-    return lines;
+    return parsedData;
 }
 
 vector<vector<string>> ControlFlowClass::parseData(const vector<string>& lines) const
@@ -567,45 +591,56 @@ Function Name: displayTable
 Function Purpose: This function displays the data to a table
 */
 {
-    // Print the header
-    cout << left
-     << setw(18) << "\n\nFirst Name"
-     << setw(15) << "Last Name"
-     << setw(15) << "Age Range"
-     << setw(10) << "Gender"
-     << setw(20) << "Marital Status"
-     << setw(15) << "Ethnicity"
-     << setw(15) << "Occupation"
-     << setw(20) << "Education Level"
-     << setw(30) << "Address"
-     << setw(20) << "Residence Type"
-     << setw(20) << "Owner of Household"
-     << setw(15) << "Gross Income"
-     << setw(20) << "Employment Status"
-     << setw(15) << "State"
-     << setw(15) << "Urbanization" << endl;
-    cout << string(260, '-') << endl;
+    // Display the message
+    DisplayCensusDataMsg();
 
-    // Print each household's data
+    // Declare Local Variables
+    const size_t ownerDataSize = 13;
+    const size_t otherMeberSize = 9;
+
+    // Display the data
     for (const auto& household : data) {
-        cout << left
-             << setw(15) << (household.size() > 0 ? household[0] : "")
-             << setw(15) << (household.size() > 1 ? household[1] : "")
-             << setw(15) << (household.size() > 2 ? household[2] : "")
-             << setw(10) << (household.size() > 3 ? household[3] : "")
-             << setw(20) << (household.size() > 4 ? household[4] : "")
-             << setw(15) << (household.size() > 5 ? household[5] : "")
-             << setw(15) << (household.size() > 6 ? household[6] : "")
-             << setw(20) << (household.size() > 7 ? household[7] : "")
-             << setw(30) << (household.size() > 8 ? household[8] : "")
-             << setw(20) << (household.size() > 9 ? household[9] : "")
-             << setw(20) << (household.size() > 10 ? household[10] : "")
-             << setw(15) << (household.size() > 11 ? household[11] : "")
-             << setw(20) << (household.size() > 12 ? household[12] : "")
-             << setw(15) << (household.size() > 13 ? household[13] : "")
-             << setw(15) << (household.size() > 14 ? household[14] : "") << endl;
+        if (household.empty()) continue;
+
+        // Print Household Owner Information
+        cout << "\nHousehold Owner Information:\n";
+        cout << "----------------------------------------\n";
+        // Concatenate first and last names if available
+        string fullName = (household.size() > 1) ? (household[0] + " " + household[1]) : (household.size() > 0 ? household[0] : "-");
+        cout << "Name: " << fullName << endl;        
+        cout << "Age: " << (household.size() > 2 ? household[2] : "-") << endl;
+        cout << "Gender: " << (household.size() > 3 ? household[3] : "-") << endl;
+        cout << "Marital Status: " << (household.size() > 4 ? household[4] : "-") << endl;
+        cout << "Ethnicity: " << (household.size() > 5 ? household[5] : "-") << endl;
+        cout << "Occupation: " << (household.size() > 6 ? household[6] : "-") << endl;
+        cout << "Education Level: " << (household.size() > 7 ? household[7] : "-") << endl;
+        cout << "Address: " << (household.size() > ownerDataSize - 6 ? household[household.size() - 6] : "-") << endl;
+        cout << "Ownership Status: " << (household.size() > ownerDataSize - 5 ? household[household.size() - 5] : "-") << endl;
+        cout << "Gross Income: " << (household.size() > ownerDataSize - 4 ? household[household.size() - 4] : "-") << endl;
+        cout << "Employment Status: " << (household.size() > ownerDataSize - 3 ? household[household.size() - 3] : "-") << endl;
+        cout << "Geographic Location: " << (household.size() > ownerDataSize - 2 ? household[household.size() - 2] : "-") << endl;
+        cout << "Urban Location: " << (household.size() > ownerDataSize - 1 ? household[household.size() - 1] : "-") << endl;
+        cout << endl;
+
+        // Check for other members
+        if (household.size() > ownerDataSize) {
+            cout << "\tOther Household Members:\n";
+            cout << "\t----------------------------------------\n";
+            // Start at 9 and increment by personDataSize for each person
+            for (size_t i = otherMeberSize; i <= household.size() - otherMeberSize; i += otherMeberSize) {
+                // Concatenate names for other household members
+                string memberName = (i + 1 < household.size()) ? (household[i] + " " + household[i + 1]) : (i < household.size() ? household[i] : "-");
+                cout << "\tName: " << memberName << endl;
+                cout << "\tAge: " << (i + 2 < household.size() ? household[i + 2] : "-") << endl;
+                cout << "\tGender: " << (i + 3 < household.size() ? household[i + 3] : "-") << endl;
+                cout << "\tMarital Status: " << (i + 4 < household.size() ? household[i + 4] : "-") << endl;
+                cout << "\tEthnicity: " << (i + 5 < household.size() ? household[i + 5] : "-") << endl;
+                cout << "\tOccupation: " << (i + 6 < household.size() ? household[i + 6] : "-") << endl;
+                cout << "\tEducation Level: " << (i + 7 < household.size() ? household[i + 7] : "-") << endl;                
+                cout << endl;
+            }
+        }
     }
-    // cout << endl;
 }
 
 void ControlFlowClass::displayCensusData(const string& filename) const
@@ -615,13 +650,14 @@ Function Purpose: This function displays the data
 */
 {
     // Declare Local Variables
-    auto lines = readFileContents(filename);
+    // auto lines = readFileContents(filename);
+    auto data = readFileContents(filename);
 
     // Parse the data
-    auto parsedData = parseData(lines);
+    // auto parsedData = parseData(lines);
 
-    // Display the data
-    displayTable(parsedData);
+    // Display the data;
+    displayTable(data);  
 }
 
 string ControlFlowClass::getCurrentWorkingDirectory() const 
@@ -630,17 +666,24 @@ Function Name: getCurrentWorkingDirectory
 Function Purpose: This function is to get the current working directory
 */
 {
-    char buffer[PATH_MAX];
-    #if defined(_WIN32) || defined(_WIN64)
-        if (GetCurrentDirectory(PATH_MAX, buffer)) {
+    // Declare Local Variables
+    char buffer[FILENAME_MAX];
+
+    #ifdef _WIN32
+        if (_getcwd(buffer, sizeof(buffer)) != -1) {
+            // On Windows, use _getcwd to get the current working directory
+            // Check if _getcwd succeeds (returns -1 on failure)
             return string(buffer);
         }
     #else
         if (getcwd(buffer, sizeof(buffer)) != nullptr) {
+            // On Unix-like systems, use getcwd to get the current working directory
+            // Check if getcwd succeeds (returns nullptr on failure)
             return string(buffer);
         }
     #endif
-    // Handle error
+
+    // Return an empty string if the cwd could not be determined
     return string();
 }
 
@@ -669,6 +712,8 @@ Function Purpose: This function is to get the econmics information
         #else
             char separator = '/';
         #endif
+
+        // Check if the cwd is empty
         if (cwd.back() != separator) {
             cwd += separator;
         }
@@ -682,6 +727,18 @@ Function Purpose: This function is to get the econmics information
     } catch (const exception& e) {
         cout << "Error: " << e.what() << endl;
     }
+
+    // Ask user if they want to return to dashboard
+    cout << "Do you want to return to the dashboard? (y/n): ";
+    char response;
+    cin >> response;
+
+    // Check if the response is not yes
+    if (response != 'y' && response != 'Y') {
+        LoginMenu();
+    }
+    // Return to the main dashboard
+    Main_Dashboard();      
 }
 
 void ControlFlowClass::ExitProgram() 

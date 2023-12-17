@@ -12,6 +12,7 @@
 // Import the Preprocessor Directives
 #include <iostream>
 #include <string>
+#include <vector>
 #include "PersonClass.h"
 #include "Household.h"
 #include "Economics.h"
@@ -35,7 +36,8 @@ Class Purpose: This is the CensusData class
         CensusData() : m_fCensusDataFile("censusData.txt") {}
 
         // Constructor with parameters 
-        CensusData(const PersonClass& personData);
+        // CensusData(const PersonClass& personData);
+        CensusData(const vector<PersonClass>& personsData);
         CensusData(const Household& householdData);
         CensusData(const Economics& economicData);
         CensusData(const geographicClass& geographicData);
@@ -50,8 +52,10 @@ Class Purpose: This is the CensusData class
         // Getter Functions
         string Get_CensusData_File() const;
         vector<CensusData> Get_Census_Data() const;
+        void addPerson(const PersonClass& person);
 
         // Execution memory methods
+        const vector<PersonClass>& getPersonsData() const;
 
         // Functions to print member information
 
@@ -62,6 +66,7 @@ Class Purpose: This is the CensusData class
     private:
         // Store memory information
         vector<CensusData> m_aCensusData;
+        vector<PersonClass> m_aPersonsData;
 
         // Set the members
         string m_fCensusDataFile = "censusData.txt";

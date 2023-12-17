@@ -636,6 +636,14 @@ int PersonClass::getMaxPersonCount() const
     return m_intMaxPersonCount;
 }
 
+string PersonClass::Get_First_Last_Name() const
+{
+    // Return the concatenated string
+    stringstream m_strFullName;
+    m_strFullName << getFirstName() << " " << getLastName();
+    return m_strFullName.str();
+}
+
 string PersonClass::genderTypeToString() const 
 /*
 Function Name: genderTypeToString
@@ -769,15 +777,15 @@ string PersonClass::formatForFile() const
     // Declare Local Variables
     stringstream ss;
 
-    // Concatenate member variables into a string
+    // Format person data
     ss << getFirstName() << ", "
-       << getLastName() << ", "
-       << getAgeRange() << ", "
-       << genderTypeToString() << ", "
-       << maritalTypeToString() << ", "
-       << ethnicityTypeToString() << ", "
-       << getOccupation() << ", "
-       << educationTypeToString();
+        << getLastName() << ", "
+        << getAgeRange() << ", "
+        << genderTypeToString() << ", "
+        << maritalTypeToString() << ", "
+        << ethnicityTypeToString() << ", "
+        << getOccupation() << ", "
+        << educationTypeToString() << ", ";
 
     // Return the concatenated string
     return ss.str();   
