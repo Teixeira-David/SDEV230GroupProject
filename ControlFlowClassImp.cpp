@@ -614,6 +614,7 @@ Function Purpose: This function displays the data to a table
         cout << "Ethnicity: " << (household.size() > 5 ? household[5] : "-") << endl;
         cout << "Occupation: " << (household.size() > 6 ? household[6] : "-") << endl;
         cout << "Education Level: " << (household.size() > 7 ? household[7] : "-") << endl;
+        cout << "Residence: " << (household.size() > ownerDataSize - 7 ? household[household.size() - 7] : "-") << endl;
         cout << "Address: " << (household.size() > ownerDataSize - 6 ? household[household.size() - 6] : "-") << endl;
         cout << "Ownership Status: " << (household.size() > ownerDataSize - 5 ? household[household.size() - 5] : "-") << endl;
         cout << "Gross Income: " << (household.size() > ownerDataSize - 4 ? household[household.size() - 4] : "-") << endl;

@@ -151,6 +151,7 @@ void Household::setAddress(){ // (Co-Edit: David Teixeira)
         string strInput = "";
 
         // Get the user input
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "\n\nPlease enter the street address of the household: ";
         getline(cin, strInput);
 
@@ -544,7 +545,7 @@ Function Purpose: This function converts the enum type to string
         case ResidenceType::MOBILE: return "Mobile";
         case ResidenceType::DORMITORY: return "Dormintory";
         case ResidenceType::NURSING_HOME: return "Nursing Home";
-        case ResidenceType::SHELTER: return "Nursing Home";
+        case ResidenceType::SHELTER: return "Shelter";
         case ResidenceType::OTHER: return "Other: " + m_strCustomResidenceType;
         default: return "Unknown residence type";
     }

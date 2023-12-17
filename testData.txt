@@ -6,12 +6,14 @@ Head of Household -> Name: John Doe
                     Marital Status: Married
                     Ethnicity: Caucasian
                     Occupation: Software Engineer
-                    Education Level: Bachelor's
+                    Education Level: College Education
+                    Residence: Condo
                     Address: 123 Main St
-                    Ownership Status: Owner
+                    Ownership Status: Sole Ownership
                     Gross Income: $80,000
-                    Employment Status: Employed
-                    Geographic Location: Urban
+                    Employment Status: Full Time
+                    Geographic Location: State
+                    Urban Location: Urban
 
 Member of Household -> Name: Jane Doe
                         Age: 32
@@ -19,7 +21,7 @@ Member of Household -> Name: Jane Doe
                         Marital Status: Married
                         Ethnicity: Caucasian
                         Occupation: Teacher
-                        Education Level: Master's
+                        Education Level: Post Graduate
 
 Member of Household -> Name: Tom Doe
                         Age: 10
@@ -27,46 +29,50 @@ Member of Household -> Name: Tom Doe
                         Marital Status: Single
                         Ethnicity: Caucasian
                         Occupation: Student
-                        Education Level: High School
+                        Education Level: Secondary Education
 
 Test Set 2
 ------------------------------------  
 Head of Household -> Name: Alice Smith
-                    Age: 45
+                    Age: 45 to 49 Years Old
                     Gender: Female
                     Marital Status: Widowed
-                    Ethnicity: African American
+                    Ethnicity: African
                     Occupation: Nurse
-                    Education Level: Master's
+                    Education Level: Post Graduate
+                    Residence: Apartment
                     Address: 456 Elm St
-                    Ownership Status: Renter
+                    Ownership Status: Tenant Ownership
                     Gross Income: $60,000
-                    Employment Status: Employed
-                    Geographic Location: Suburban
+                    Employment Status: Full Time
+                    Geographic Location: Base
+                    Urban Location: Rural
 
 Member of Household -> Name: Sarah Smith
                         Age: 19
                         Gender: Female
                         Marital Status: Single
-                        Ethnicity: African American
+                        Ethnicity: African
                         Occupation: Student
-                        Education Level: High School
+                        Education Level: Secondary Education
 
 
 Test Set 3
 ------------------------------------  
 Head of Household -> Name: Eleanor Johnson
                     Age: 28
-                    Gender: Female
-                    Marital Status: Single
-                    Ethnicity: Hispanic
+                    Gender: Non-Binary
+                    Marital Status: Civil Partnership
+                    Ethnicity: Latino
                     Occupation: Accountant
-                    Education Level: Bachelor's
+                    Education Level: Advanced Degree
+                    Residence: Townhouse
                     Address: 789 Oak St
-                    Ownership Status: Owner
+                    Ownership Status: Trust Ownership
                     Gross Income: $70,000
-                    Employment Status: Employed
-                    Geographic Location: Urban
+                    Employment Status: Self Employed
+                    Geographic Location: Provinence
+                    Urban Location: Suburban
 
 
 Test Set 4

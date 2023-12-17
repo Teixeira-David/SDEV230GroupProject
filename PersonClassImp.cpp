@@ -689,6 +689,7 @@ Function Purpose: This function converts the enum type to string
         case MaritalType::MARRIED: return "Married";
         case MaritalType::SEPARATED: return "Separated";
         case MaritalType::DIVORCED: return "Divorced";
+        case MaritalType::WIDOWED: return "Widowed";
         case MaritalType::CIVIL_PARTNERSHIP: return "Civil Partnership";
         case MaritalType::OTHER: return "Other: " + m_strCustomMaritalStatus;
         default: return "Unknown Marital Status";
